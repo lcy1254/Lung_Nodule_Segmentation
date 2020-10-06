@@ -19,7 +19,7 @@ import numpy as np
 from skimage import measure
 from skimage.transform import resize
 from skimage import img_as_bool
-
+from pylidc.utils import consensus
 
 # In[ ]:
 
