@@ -1,12 +1,3 @@
-#!/usr/bin/env python
-# coding: utf-8
-
-# In[1]:
-
-
-#version1.0
-get_ipython().run_line_magic('matplotlib', 'inline')
-get_ipython().run_line_magic('pip', 'install pylidc')
 import pylidc as pl
 import numpy as np
 import pandas as pd
@@ -14,7 +5,6 @@ import os
 import scipy.ndimage
 import matplotlib.pyplot as plt 
 import pydicom
-get_ipython().run_line_magic('pip', 'install opencv-python')
 import cv2
 from mpl_toolkits.mplot3d.art3d import Poly3DCollection
 import numpy as np
@@ -22,19 +12,10 @@ from skimage import measure
 from skimage.transform import resize
 from skimage import img_as_bool
 from pylidc.utils import consensus
-get_ipython().run_line_magic('pip', 'install nibabel')
 import nibabel as nib
 
-
-# In[2]:
-
-
 def preprocess(scan):
-    #made major changes
     pre_image = scan.to_volume()
-    
-    #convert to HU
-    #to_volume() seems to be already in HU units although load_all_dicom_images() is not in HU units
     
     #change the background to air 
     pre_image[pre_image <= -2000] = -1000
@@ -64,9 +45,6 @@ def segment_lung_mask(image, fill_lung_structures=True):
     binary_image = np.array(image > -700, dtype=np.int8)+1
     labels = measure.label(binary_image)
     
-    ######### GET ALL VALUE OF BOUNDARY PIXELS AND DO UNIQUE FUNCTION 
-    ######### THEN FILL ALL THAT WITH 2's --> MAKES IT MORE ROBUST 
-    
     temp = []
     temp.extend(np.unique(labels[:,:2,1:image.shape[2]:50]))
     temp.extend(np.unique(labels[:,-2:,1:image.shape[2]:50]))
@@ -79,12 +57,7 @@ def segment_lung_mask(image, fill_lung_structures=True):
             binary_image[labels == label] = 2
         elif label == 2:
             None 
-    
-    #top_background_label = labels[0,0,0]
-    #bottom_background_label = labels[image02.shape[0]-1, image02.shape[1]-1,0]
-    #binary_image[labels == top_background_label] = 2
-    #binary_image[labels == bottom_background_label] = 2
-    
+   
     # Method of filling the lung structures (that is superior to something like 
     # morphological closing)
     if fill_lung_structures:
@@ -153,9 +126,8 @@ def crop(image, mask, x1, x2, y1, y2, z1, z2):
     return new_image, new_mask 
 
 
-# In[3]:
 
-
+#call only this one function to preprocess dicom files 
 def full_preprocess(pid):
     scan = pl.query(pl.Scan).filter(pl.Scan.patient_id == 'LIDC-IDRI-{}'.format(str(pid).zfill(4))).first()
     image = preprocess(scan) #reshaped
@@ -168,14 +140,12 @@ def full_preprocess(pid):
     #creating nifti files (insert path)
     reshaped_final_image = final_image.reshape((final_image.shape[0],final_image.shape[1],final_image.shape[2],1))
     img = nib.Nifti1Image(reshaped_final_image, None)
-    nib.save(img, os.path.join('D:\\lung_nifti_files','volume-{}.nii.gz'.format(pid)))
+    nib.save(img, os.path.join('D:\\lung_nifti_files','volume-{}.nii.gz'.format(pid)))   #edit path 
     labels = nib.Nifti1Image(final_mask, None)
-    nib.save(labels, os.path.join('D:\\lung_nifti_files','labels-{}.nii.gz'.format(pid)))
+    nib.save(labels, os.path.join('D:\\lung_nifti_files','labels-{}.nii.gz'.format(pid)))    #edit path 
 
 
-# In[11]:
-
-
+#sample code calling full_preprocess function
 scans = pl.query(pl.Scan)
 num = scans.count()
 for i in range(75,num):
@@ -183,75 +153,3 @@ for i in range(75,num):
         full_preprocess(i+1)
     except:
         print(i+1)
-
-
-# In[ ]:
-
-
-
-
-
-# In[ ]:
-
-
-
-
-
-# In[ ]:
-
-
-
-
-
-# In[ ]:
-
-
-
-
-
-# In[ ]:
-
-
-
-
-
-# In[ ]:
-
-
-
-
-
-# In[24]:
-
-
-#try 900 and 78 and 1 --> scan.to_volume() and scan.load_all_dicom_images() produce different results 
-#for 900 and 78, scan.to_volume() is already in hounsfield units... 
-scan = pl.query(pl.Scan).filter(pl.Scan.patient_id == 'LIDC-IDRI-0200').first()
-pre_image = scan.to_volume()
-slices = scan.load_all_dicom_images()
-plt.hist(slices[0].pixel_array.flatten(), color = 'c')
-plt.xlabel("Hounsfield Units (HU)")
-plt.ylabel("Frequency")
-plt.show()
-
-
-# In[28]:
-
-
-plt.hist(pre_image[:,:100].flatten(), color = 'c')
-plt.xlabel("Hounsfield Units (HU)")
-plt.ylabel("Frequency")
-plt.show()
-
-
-# In[27]:
-
-
-plt.imshow(pre_image[:,:,100])
-
-
-# In[ ]:
-
-
-
-
