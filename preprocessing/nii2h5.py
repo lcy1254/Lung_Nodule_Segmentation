@@ -1,4 +1,7 @@
 """
+!!!!! code from https://github.com/bbrister !!!!!
+https://github.com/bbrister/CTH_seg_private/blob/master/nii2h5.py
+
         nii2h5.py
 
         DESCRIPTION
@@ -34,6 +37,7 @@
                         pet-ct-lung
                         liver_lesion
                         baselines-1mm
+                        ct_lung
          
 """
 import h5py
