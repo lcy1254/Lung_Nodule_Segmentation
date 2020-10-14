@@ -10,7 +10,7 @@ declare -r path_model=$path_data/model
 
 #declare -r name=CT_Liver_Lesion_Unet_fuzzy
 #declare -r name=CT_Liver_Lesion_Unet
-declare -r name=CT_Liver_Lesion_Unet_ce
+declare -r name=CT_Lung_Seg_Unet
 
 declare -r path_log=$path_data/logs
 declare -r path_vis=$path_data/visualization
@@ -33,7 +33,7 @@ declare -r lr=0.00001 # Stage 1
 #declare -r lr=0.0000001 # Stage  4
 declare -r net='uNet' # 'GoogLe' or 'uNet'
 declare -r loadit=0
-declare -r window='liver' # Sets preprocessing window. Options: 'liver'
+declare -r window='all' # Sets preprocessing window. Options: 'liver'
 declare -r batch_norm=1 # Use batch norm if nonzero
 declare -r autotune=0 # Allow Tensorflow to run benchmarks if nonzero
 declare -r balanced=1 # If nonzero, weight the loss function to balance classes
