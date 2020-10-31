@@ -1,4 +1,4 @@
-#Only have to do this the first time Loadit is set to 1                       (I THINK)
+#Only have to do this the first time Loadit is set to 1
 #Do this in python command line (line by line)
 import os 
 import pickle
@@ -10,7 +10,7 @@ print(os.getcwd())
 print(os.listdir())
 #index to pkl file 
 print(os.listdir()[2])
-#store name to variable 
+#store name to variable (have to do this because an error comes up if manually typed)
 file = os.listdir()[2]
 
 #first time entering iter 
