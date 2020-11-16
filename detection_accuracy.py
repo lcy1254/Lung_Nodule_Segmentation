@@ -1,17 +1,17 @@
 '''
 compute detection accuracy
-true positive if area of overlap/dice coefficient is >= 35 (CHECK AND FIND GOOD VALUE)
-false postive if area of overlap/dice coefficient is <35
+true positive if area of overlap/dice coefficient is >= 40 (CHECK AND FIND GOOD VALUE)
+false postive if area of overlap/dice coefficient is <40
 
 find bounding box of true nodules
 check dice coefficient of prediction vs truth only inside the bounding box --> determines true positive or false negative
 all other nodules are false positives
-compute confusion matrix 
 '''
 
 def cluster(a):
     alist = sorted(a)  #LESSON LEARNED : NEVER WORK DIRECTLY WITH THE INPUTS, BECAUSE IF YOU DO IT CHANGES THE ORIGINAL. ALWAYS MAKE A COPY 
     clusters = []
+    
     temp = [alist[0]]
     count = 0
     
@@ -38,6 +38,15 @@ def get_nodules(labels, pref):
 
     #find nonzero indices
     inds = np.nonzero(labels)
+    
+    #if there is no nodule in image 
+    if len(inds[0]) == 0:
+        print("no nodule detected")
+        if pref == 0:
+            return 0
+        else:
+            return [],[],[]
+    
     temp_clus = cluster(inds[0])  #the first dimension is always automatically sorted in np.nonzero function 
     
     dim0_clus = temp_clus
@@ -75,10 +84,9 @@ def get_nodules(labels, pref):
         if checkConsecutive(dim2_clus[i]) == True:
             continue
         else:
-            print("CONSECUTIVE FALSE")
             a = cluster(dim2_clus[i])
             insert = [[[] for i in range(len(a))] for dim in range(3)]
-            #insert[2] = a DO NOT USE
+            #insert[2] = a
             for p, value in enumerate(dim2_clus[i]):
                 for r in range(len(a)):
                     if (min(a[r]) <= value <= max(a[r])) == True:
@@ -120,6 +128,12 @@ def boundingBox(labels):
     #for all nodules, just need to input label array 
     dim0, dim1, dim2 = get_nodules(labels, 1)
     nodNum = get_nodules(labels, 0)
+    
+    #if no nodule in image 
+    if nodNum == 0:
+        print("no nodule detected")
+        return []
+    
     bbox = np.zeros((nodNum, 2, labels.ndim), dtype = int)
     for nod in range(nodNum):
         for dim in range(labels.ndim):
@@ -132,6 +146,11 @@ def boundingBox(labels):
 def trueNod_detection_accuracy(bboxNod, pred, gt):
     #for one nodule bbox (so need to call this function for every nodule)
     bbox = bboxNod.copy()
+    
+    #if no nodule in scan 
+    if len(bbox) == 0:
+        return ("Bbox is empty; no nodule")
+    
     for i in range(3):
         bbox[0,i] = bbox[0,i]-10
         bbox[1,i] = bbox[1,i]+10
@@ -151,6 +170,17 @@ def compute_confusion(pred, gt):
     TN = 0
     FN = 0
     confusion = np.zeros((2, 2))
+    
+    #if there is no nodule in gt 
+    if len(bboxs) == 0:
+        print("no nodule in image")
+        confusion[0,0] = 0
+        confusion[0,1] = predNodNum
+        confusion[1,1] = 0
+        confusion[1,0] = 0
+        return confusion 
+        
+        
     for bbox in range(len(bboxs)):
         if trueNod_detection_accuracy(bboxs[bbox], pred, gt) > 0.35:
             TP += 1
