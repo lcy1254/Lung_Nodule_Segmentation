@@ -1,3 +1,4 @@
+#compute confusion matrix & calculate nodule-wise detection accuracies 
 class Nod:
     'class for individual nodules'
     s=np.array([[[1, 1, 1],
