@@ -1,17 +1,7 @@
 #compute confusion matrix & calculate nodule-wise detection accuracies 
 class Nod:
     'class for individual nodules'
-    s=np.array([[[1, 1, 1],
-    [1, 1, 1],
-    [1, 1, 1]],
-
-   [[1, 1, 1],
-    [1, 1, 1],
-    [1, 1, 1]],
-
-   [[1, 1, 1],
-    [1, 1, 1],
-    [1, 1, 1]]], dtype='uint8')
+    s = np.ones((3,3,3))
     
     def __init__(self, orig_labels, class_num):
         labels = np.array(orig_labels)
@@ -30,7 +20,7 @@ class Nod:
         arr, num = label(pred, Nod.s)
         return num 
     
-    def DetectionAccuracy(self, orig_pred):
+    def DetectionDice(self, orig_pred):
         pred = np.array(orig_pred)
         predMask = (pred == 1)
         nodMask = self.array
@@ -39,14 +29,16 @@ class Nod:
         #basically this is replacing the role of the bounding box that I used previously 
         labeledPred, prednods = label(predMask, Nod.s)
         x,y,z = np.nonzero(nodMask & predMask)
+        #in case two nodules are predicted in the area of one true nodule
+        #should delete? because this would significantly lower the accuracy 
         a = [labeledPred[x[i],y[i],z[i]] for i in range(len(x))]
         vals = np.unique(a)
         predcount = 0
         for val in vals:
             valMask = (labeledPred == val)
             predcount += np.sum(valMask)
-        acc = float(2*numIntersect/(np.sum(nodMask) + predcount))
-        return acc
+        dice = float(2*numIntersect/(np.sum(nodMask) + predcount))
+        return dice
     
     @classmethod 
     def computeConfusion(cls, orig_gt, orig_pred):
@@ -57,8 +49,8 @@ class Nod:
         TN = 0
         FN = 0
         confusion = np.zeros((2, 2))
-        for nod in range(nod_count):
-            exec('acc = nod{}.DetectionAccuracy(orig_pred)'.format(str(nod)), locals(), globals())
+        for i in range(nod_count):
+            acc = nods[i].DetectionDice(orig_pred)
             if acc > 0.35:
                 TP += 1
             else:
