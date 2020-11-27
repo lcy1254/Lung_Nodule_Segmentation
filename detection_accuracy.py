@@ -20,7 +20,7 @@ class Nod:
         arr, num = label(pred, Nod.s)
         return num 
     
-    def DetectionDice(self, orig_pred):
+    def NodDetectionDice(self, orig_pred):
         pred = np.array(orig_pred)
         predMask = (pred == 1)
         nodMask = self.array
@@ -35,10 +35,50 @@ class Nod:
         vals = np.unique(a)
         predcount = 0
         for val in vals:
-            valMask = (labeledPred == val)
-            predcount += np.sum(valMask)
+            if a.count(val) > 0.1*np.sum(nodMask):
+                valMask = (labeledPred == val)
+                predcount += np.sum(valMask)
         dice = float(2*numIntersect/(np.sum(nodMask) + predcount))
         return dice
+    
+    @classmethod 
+    def DetectionDice(cls, orig_gt, orig_pred):
+        gt = np.array(orig_gt)
+        pred = np.array(orig_pred)
+        predMask = (pred == 1)
+        gtMask = (gt == 1)
+        #if no nodule in gt scan
+        if np.sum(gtMask) == 0:
+            print("no nodule in gt")
+            return
+        numIntersect = np.sum(gtMask & predMask)
+        dice = float(2*numIntersect/(np.sum(gtMask)+np.sum(predMask)))
+        return dice 
+    
+    @classmethod 
+    def DetectionDiceWoFP(cls, orig_gt, orig_pred):
+        gt = np.array(orig_gt)
+        pred = np.array(orig_pred)
+        predMask = (pred == 1)
+        gtMask = (gt == 1)
+        #if no nodule in gt scan
+        if np.sum(gtMask) == 0:
+            print("no nodule in gt")
+            return 
+        #get num of pixels of intersection -- true positive 
+        numIntersect = np.sum(gtMask & predMask)
+        #only get num of pixels in nodules that are TP -- exclude FP 
+        labeledPred, prednods = label(predMask, Nod.s)
+        x,y,z = np.nonzero(gtMask & predMask)
+        #a drawback is that a FP nodule might be included with just a pixel's overlap 
+        a = [labeledPred[x[i],y[i],z[i]] for i in range(len(x))]
+        vals = np.unique(a)
+        predcount = 0
+        for val in vals:
+            valMask = (labeledPred == val)
+            predcount += np.sum(valMask)
+        diceWoFP = float(2*numIntersect/(np.sum(gtMask) + predcount))
+        return diceWoFP 
     
     @classmethod 
     def computeConfusion(cls, orig_gt, orig_pred):
@@ -50,7 +90,7 @@ class Nod:
         FN = 0
         confusion = np.zeros((2, 2))
         for i in range(nod_count):
-            acc = nods[i].DetectionDice(orig_pred)
+            acc = nods[i].NodDetectionDice(orig_pred)
             if acc > 0.35:
                 TP += 1
             else:
