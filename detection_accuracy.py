@@ -1,4 +1,7 @@
-#compute confusion matrix & calculate nodule-wise detection accuracies 
+import numpy as np
+from scipy.ndimage import label, generate_binary_structure
+
+#compute confusion matrix & calculate nodule-wise detection accuracies
 class Nod:
     'class for individual nodules'
     s = np.ones((3,3,3))
@@ -14,23 +17,23 @@ class Nod:
         arr, num = label(orig_gt, Nod.s)
         return num
     
-    @classmethod 
+    @classmethod
     def pred_count(cls, orig_pred):
         pred = np.array(orig_pred)
         arr, num = label(pred, Nod.s)
-        return num 
+        return num
     
     def NodDetectionDice(self, orig_pred):
         pred = np.array(orig_pred)
         predMask = (pred == 1)
         nodMask = self.array
         numIntersect = np.sum(nodMask & predMask)
-        #in case predicted nodule may be bigger than true nodule --> prevent false 100% accuracies 
-        #basically this is replacing the role of the bounding box that I used previously 
+        #in case predicted nodule may be bigger than true nodule --> prevent false 100% accuracies
+        #basically this is replacing the role of the bounding box that I used previously
         labeledPred, prednods = label(predMask, Nod.s)
         x,y,z = np.nonzero(nodMask & predMask)
         #in case two nodules are predicted in the area of one true nodule
-        #should delete? because this would significantly lower the accuracy 
+        #should delete? because this would significantly lower the accuracy
         a = [labeledPred[x[i],y[i],z[i]] for i in range(len(x))]
         vals = np.unique(a)
         predcount = 0
@@ -41,7 +44,7 @@ class Nod:
         dice = float(2*numIntersect/(np.sum(nodMask) + predcount))
         return dice
     
-    @classmethod 
+    @classmethod
     def DetectionDice(cls, orig_gt, orig_pred):
         gt = np.array(orig_gt)
         pred = np.array(orig_pred)
@@ -50,12 +53,13 @@ class Nod:
         #if no nodule in gt scan
         if np.sum(gtMask) == 0:
             print("no nodule in gt")
-            return
+            return float(0) #ask what I should return
+            #or should I just skip these and not include them
         numIntersect = np.sum(gtMask & predMask)
         dice = float(2*numIntersect/(np.sum(gtMask)+np.sum(predMask)))
-        return dice 
+        return dice
     
-    @classmethod 
+    @classmethod
     def DetectionDiceWoFP(cls, orig_gt, orig_pred):
         gt = np.array(orig_gt)
         pred = np.array(orig_pred)
@@ -64,13 +68,14 @@ class Nod:
         #if no nodule in gt scan
         if np.sum(gtMask) == 0:
             print("no nodule in gt")
-            return 
-        #get num of pixels of intersection -- true positive 
+            return float(1) #ask what I should return
+            #or should I just skip these and not include them
+        #get num of pixels of intersection -- true positive
         numIntersect = np.sum(gtMask & predMask)
-        #only get num of pixels in nodules that are TP -- exclude FP 
+        #only get num of pixels in nodules that are TP -- exclude FP
         labeledPred, prednods = label(predMask, Nod.s)
         x,y,z = np.nonzero(gtMask & predMask)
-        #a drawback is that a FP nodule might be included with just a pixel's overlap 
+        #a drawback is that a FP nodule might be included with just a pixel's overlap
         a = [labeledPred[x[i],y[i],z[i]] for i in range(len(x))]
         vals = np.unique(a)
         predcount = 0
@@ -78,10 +83,10 @@ class Nod:
             valMask = (labeledPred == val)
             predcount += np.sum(valMask)
         diceWoFP = float(2*numIntersect/(np.sum(gtMask) + predcount))
-        return diceWoFP 
+        return diceWoFP
     
-    @classmethod 
-    def computeConfusion(cls, orig_gt, orig_pred):
+    @classmethod
+    def computeConfusion(cls, nods, orig_gt, orig_pred):
         nod_count = Nod.count(orig_gt)
         pred_nod_count = Nod.pred_count(orig_pred)
         TP = 0
@@ -97,7 +102,7 @@ class Nod:
                 FN += 1
         FP = pred_nod_count - TP
         assert TP + FP == pred_nod_count
-        assert TP + FN == nod_count 
+        assert TP + FN == nod_count
         confusion[0,0] = TP
         confusion[0,1] = FP
         confusion[1,0] = FN
