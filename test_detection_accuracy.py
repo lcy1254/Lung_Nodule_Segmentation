@@ -85,13 +85,13 @@ for predIter in os.listdir(predDir):
                 paths[a] = os.path.join(outDir, '{}_{}.txt'.format(a, count))
 
         confusionFile = open(paths['confusion'], 'w+')
-        confusionFile.write(confusion_matrix)
+        confusionFile.write(str(confusion_matrix))
         confusionFile.close()
 
         diceFile = open(paths['dice'], 'w+')
-        diceFile.write(finalDice)
+        diceFile.write(str(finalDice))
         diceFile.close()
 
         woFP = open(paths['woFP'], 'w+')
-        woFP.write(finalDicewoFP)
+        woFP.write(str(finalDicewoFP))
         woFP.close()
