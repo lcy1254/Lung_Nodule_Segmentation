@@ -64,23 +64,23 @@ finalDicewoFP = dicewoFP/img_count
 paths = {}
 
 for a in ['confusion', 'dice', 'woFP']:
-    path[a] = os.path.join(outDir, '{}.txt'.format(a))
+    paths[a] = os.path.join(outDir, '{}.txt'.format(a))
     count = 0
-    while os.path.isfile(path[a]):
+    while os.path.isfile(paths[a]):
         count += 1
-        path[a] = os.path.join(outDir, '{}_{}.txt'.format(a, count))
+        paths[a] = os.path.join(outDir, '{}_{}.txt'.format(a, count))
 
-confusionFile = open(path['confusion'], 'w+')
+confusionFile = open(paths['confusion'], 'w+')
 confusionFile.write(confusion_matrix)
 print(confusion_matrix)
 confusionFile.close()
 
-diceFile = open(path['dice'], 'w+')
+diceFile = open(paths['dice'], 'w+')
 diceFile.write(finalDice)
 print(finalDice)
 diceFile.close()
 
-woFP = open(path['woFP'], 'w+')
+woFP = open(paths['woFP'], 'w+')
 woFP.write(finalDicewoFP)
 print(finalDicewoFP)
 woFP.close()
