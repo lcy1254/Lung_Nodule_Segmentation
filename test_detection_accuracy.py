@@ -61,6 +61,10 @@ for predIter in os.listdir(predDir):
 finalDice = dice/img_count
 finalDicewoFP = dicewoFP/img_count
 
+print(confusion_matrix)
+print(finalDice)
+print(finalDicewoFP)
+
 paths = {}
 
 for a in ['confusion', 'dice', 'woFP']:
