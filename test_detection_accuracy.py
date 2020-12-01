@@ -83,6 +83,10 @@ for predIter in os.listdir(predDir):
             while os.path.isfile(paths[a]):
                 count += 1
                 paths[a] = os.path.join(outDir, '{}_{}.txt'.format(a, count))
+        
+        assert os.path.isfile(paths['confusion'])
+        assert os.path.isfile(paths['dice'])
+        assert os.path.isfile(paths['woFP'])
 
         confusionFile = open(paths['confusion'], 'w+')
         confusionFile.write(str(confusion_matrix))
