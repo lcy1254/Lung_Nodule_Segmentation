@@ -35,10 +35,11 @@ assert os.path.isdir(outDir)
 confusion_matrix = np.zeros((2, 2))
 dice = float(0)
 dicewoFP = float(0)
-img_count = 0'''
+img_count = 0
+'''
     
 for predIter in os.listdir(predDir):
-    if 'iter_' in predIter and not os.path.isfile(os.path.join(predDir, predIter, 'eval', 'confusion.txt')):
+    if 'iter_' in predIter:
         confusion_matrix = np.zeros((2, 2))
         dice = float(0)
         dicewoFP = float(0)
