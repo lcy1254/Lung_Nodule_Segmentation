@@ -10,6 +10,7 @@ import detection_accuracy as da
 import re
 import pandas as pd
 import nodSize as ns
+import att
 
 #Usage: run_att.py
 
@@ -53,7 +54,7 @@ for predIter in os.listdir(predDir):
                 for i in range(nod_num):
                     nods[i] = da.Nod(labeled, i + 1)
                 
-                getAtts(nods, img_num)
+                att.getAtts(nods, img_num)
                 for i in range(nod_num):
                     #patient ID
                     PID.append(img_num)
