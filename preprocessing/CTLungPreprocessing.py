@@ -144,7 +144,7 @@ def full_preprocess(pid):
     labels = nib.Nifti1Image(final_mask, None)
     nib.save(labels, os.path.join('D:\\lung_nifti_files','labels-{}.nii.gz'.format(pid)))    #edit path 
 
-
+'''
 #sample code calling full_preprocess function
 scans = pl.query(pl.Scan)
 num = scans.count()
@@ -153,3 +153,4 @@ for i in range(75,num):
         full_preprocess(i+1)
     except:
         print(i+1)
+'''
