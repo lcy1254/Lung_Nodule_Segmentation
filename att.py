@@ -38,7 +38,7 @@ def getAtts(nods, pid):
                     nods[b].texture = int(nodules[a].texture)
                     nods[b].malignancy = int(nodules[a].malignancy)
     except:
-        print('pid: {}, nodules numbers do not match.')
+        print('pid: {}, nodules numbers do not match.'.format(pid))
         
         for a in range(len(nodules)):
             nod_mask, nod_bbox, ann_masks = consensus(allNodules[a])
