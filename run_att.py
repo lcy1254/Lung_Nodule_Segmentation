@@ -1,4 +1,4 @@
-from preprocessing.CTLungPreprocessing import *
+from .preprocessing.CTLungPreprocessing import *
 import att
 import numpy as np
 import sys
@@ -22,7 +22,7 @@ assert os.path.isdir(predDir)
 
 for predIter in os.listdir(predDir):
     if 'iter_' in predIter:
-        print(predIter) #temporary 
+        print(predIter) #temporary
         PID = []
         detectAcc = []
         detectBool = []
