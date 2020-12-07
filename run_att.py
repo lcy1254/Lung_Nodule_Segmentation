@@ -1,4 +1,4 @@
-from .preprocessing.CTLungPreprocessing import *
+import CTLungPreprocessing 
 import att
 import numpy as np
 import sys
