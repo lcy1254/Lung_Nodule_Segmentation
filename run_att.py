@@ -1,4 +1,4 @@
-import CT-lung-preprocessing as ct
+from preprocessing.CT-lung-preprocessing import *
 import att
 import numpy as np
 import sys
