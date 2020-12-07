@@ -1,4 +1,4 @@
-import CT-lung-preprocessing as ct
+import CTLungPreprocessing as ct
 import pylidc as pl
 import numpy as np
 import pandas as pd
