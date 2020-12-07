@@ -41,20 +41,20 @@ def getAtts(nods, pid):
         print('pid: {}, nodules numbers do not match.')
         
         for a in range(len(nodules)):
-        nod_mask, nod_bbox, ann_masks = consensus(allNodules[a])
-        scan_vol = np.zeros(shape)
-        scan_vol[nod_bbox] = nod_mask
-        temp_vol = reshape_mask(scan_vol, image)
-        final_vol = temp_vol[x1:x2, y1:y2, z1:z2]
-        for b in range(len(nods)):
-            numIntersect = np.sum(final_vol & nods[b].array)
-            if numIntersect == np.sum(final_vol) or numIntersect >= 0.9*np.sum(final_vol):
-                nods[b].subtlety = int(nodules[a].subtlety)
-                nods[b].internalStructure = int(nodules[a].internalStructure)
-                nods[b].calcification = int(nodules[a].calcification)
-                nods[b].sphericity = int(nodules[a].sphericity)
-                nods[b].margin = int(nodules[a].margin)
-                nods[b].lobulation = int(nodules[a].lobulation)
-                nods[b].spiculation = int(nodules[a].spiculation)
-                nods[b].texture = int(nodules[a].texture)
-                nods[b].malignancy = int(nodules[a].malignancy)
+            nod_mask, nod_bbox, ann_masks = consensus(allNodules[a])
+            scan_vol = np.zeros(shape)
+            scan_vol[nod_bbox] = nod_mask
+            temp_vol = reshape_mask(scan_vol, image)
+            final_vol = temp_vol[x1:x2, y1:y2, z1:z2]
+            for b in range(len(nods)):
+                numIntersect = np.sum(final_vol & nods[b].array)
+                if numIntersect == np.sum(final_vol) or numIntersect >= 0.9*np.sum(final_vol):
+                    nods[b].subtlety = int(nodules[a].subtlety)
+                    nods[b].internalStructure = int(nodules[a].internalStructure)
+                    nods[b].calcification = int(nodules[a].calcification)
+                    nods[b].sphericity = int(nodules[a].sphericity)
+                    nods[b].margin = int(nodules[a].margin)
+                    nods[b].lobulation = int(nodules[a].lobulation)
+                    nods[b].spiculation = int(nodules[a].spiculation)
+                    nods[b].texture = int(nodules[a].texture)
+                    nods[b].malignancy = int(nodules[a].malignancy)
