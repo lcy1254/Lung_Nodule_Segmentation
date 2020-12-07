@@ -14,8 +14,8 @@ import att
 
 #Usage: run_att.py
 
-gtDir = '/Volumes/Transcend/nifti_files/lung_nifti_files' #'data/lung_seg/lung_nifti_files'
-predDir = '/Users/ChaeyoungLee/Downloads/inference' #'data/lung_seg/inference'
+gtDir = 'data/lung_seg/lung_nifti_files'
+predDir = 'data/lung_seg/inference'
 
 assert os.path.isdir(gtDir)
 assert os.path.isdir(predDir)
