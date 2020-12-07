@@ -10,6 +10,15 @@ class Nod:
         labels = np.array(orig_labels)
         self.array = (labels == class_num)
         self.indices = np.nonzero(self.array)
+        self.subtlety = 0
+        self.internalStructure = 0
+        self.calcification = 0
+        self.sphericity = 0
+        self.margin = 0
+        self.lobulation = 0
+        self.spiculation = 0
+        self.texture = 0
+        self.malignancy = 0
     
     @classmethod
     def count(cls, orig_gt):
