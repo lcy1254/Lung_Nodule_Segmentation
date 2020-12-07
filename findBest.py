@@ -17,11 +17,13 @@ for predIter in os.listdir(predDir):
         Fdice = open(os.path.join(predDir, predIter, 'eval', 'dice.txt'), 'r')
         FwoFP = open(os.path.join(predDir, predIter, 'eval', 'woFP.txt'), 'r')
         
-        tempconf = np.array(Fconf.read())
+        a = Fconf.read()
+        b = re.findall(r'[0-9]+', a)
+        tempconf = np.array(b, dtype = 'int').reshape((2,2))
         tempdice = float(Fdice.read())
         tempwoFP = float(FwoFP.read())
         
-        if tempconf[0][0] > confusion_matrix[0][0]:
+        if tempconf[0,0] > confusion_matrix[0,0]:
             confusion_matrix = tempconf
             confIter = re.findall(r'[0-9]+', predIter)
         if tempdice > dice:
@@ -31,10 +33,9 @@ for predIter in os.listdir(predDir):
             dicewoFP = tempwoFP
             woFPIter = re.findall(r'[0-9]+', predIter)
 
-print('confusion matrix:' + confusion_matrix)
-print('confusion iter:' + confIter)
-print('dice:' + dice)
-print('dice iter:' + diceIter)
-print('woFP:' + dicewoFP)
-print('woFP iter:' + woFPIter)
-
+print('confusion matrix: \n' + str(confusion_matrix))
+print('confusion iter: ' + str(confIter))
+print('dice: ' + str(dice))
+print('dice iter: ' + str(diceIter))
+print('woFP: ' + str(dicewoFP))
+print('woFP iter: ' + str(woFPIter))
