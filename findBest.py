@@ -19,7 +19,13 @@ for predIter in os.listdir(predDir):
         
         a = Fconf.read()
         b = re.findall(r'[0-9]+', a)
-        tempconf = np.array(b, dtype = 'int').reshape((2,2))
+        try:
+            tempconf = np.array(b, dtype = 'int').reshape((2,2))
+        except:
+            print(predIter)
+            print(a)
+            print(b)
+            sdfsdf
         tempdice = float(Fdice.read())
         tempwoFP = float(FwoFP.read())
         
