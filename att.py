@@ -1,4 +1,4 @@
-import CTLungPreprocessing as ct
+from .preprocessing.CTLungPreprocessing import *
 import pylidc as pl
 import numpy as np
 import pandas as pd
