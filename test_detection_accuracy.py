@@ -13,6 +13,8 @@ import re
 #from gtDir get files called 'labels-{}.nii.gz'.format(pid)
 #from predDir path: 'iter_{}/prediction/inferred_volume_{}_model_iter_{}.nii.gz'.format(iter, pid, iter)
 
+#or can just insert path to script 
+
 #get gt and pred data location
 gtDir = sys.argv[1]
 predDir = sys.argv[2]
