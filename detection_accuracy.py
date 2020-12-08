@@ -55,6 +55,7 @@ class Nod:
     
     @classmethod
     def DetectionDice(cls, orig_gt, orig_pred):
+        #exclude cases where # of nod = 0
         gt = np.array(orig_gt)
         pred = np.array(orig_pred)
         predMask = (pred == 1)
@@ -69,7 +70,43 @@ class Nod:
         return dice
     
     @classmethod
-    def DetectionDiceWoFP(cls, orig_gt, orig_pred):
+    def DetectionDiceTP(cls, orig_gt, orig_pred):
+        #exclude cases where # of nod = 0
+        gt = np.array(orig_gt)
+        pred = np.array(orig_pred)
+        predMask = (pred == 1)
+        gtMask = (gt == 1)
+        #if no nodule in gt scan
+        if np.sum(gtMask) == 0:
+            print("no nodule in gt")
+            return float(1) #ask what I should return
+            #or should I just skip these and not include them
+        #get num of pixels of intersection -- true positive
+        numIntersect = np.sum(gtMask & predMask)
+        #only get num of pixels in nodules that are TP -- exclude FP
+        labeledPred, prednods = label(predMask, Nod.s)
+        x,y,z = np.nonzero(gtMask & predMask)
+        #a drawback is that a FP nodule might be included with just a pixel's overlap
+        a = [labeledPred[x[i],y[i],z[i]] for i in range(len(x))]
+        vals = np.unique(a)
+        predcount = 0
+        for val in vals:
+            valMask = (labeledPred == val)
+            predcount += np.sum(valMask)
+        labeledGt, gtnods = label(gtMask, Nod.s)
+        x1,y1,z1 = np.nonzero(gtMask & predMask)
+        a1 = [labeledGt[x1[i], y1[i], z1[i]] for i in range(len(x1))]
+        vals1 = np.unique(a1)
+        gtcount = 0
+        for val in vals1:
+            valMask = (labeledGt == val)
+            gtcount += np.sum(valMask)
+        diceTP = float(2*numIntersect/(gtcount + predcount))
+        return diceTP
+    
+    @classmethod
+    def DetectionDicewoFP(cls, orig_gt, orig_pred):
+        #exclude cases where # of nod = 0
         gt = np.array(orig_gt)
         pred = np.array(orig_pred)
         predMask = (pred == 1)

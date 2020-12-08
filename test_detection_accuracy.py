@@ -58,6 +58,11 @@ for predIter in os.listdir(predDir):
                 s = np.ones((3,3,3))
                 labeled, nod_num = label(gtimg.dataobj, s)
                 nods = {}
+                
+                if nod_num == 0:
+                    confusion_matrix += da.Nod.computeConfusion(nods, gtimg.dataobj, predimg.dataobj)
+                    img_count -= 1
+                    continue
                         
                 for i in range(nod_num):
                     nods[i] = da.Nod(labeled, i + 1)
@@ -65,6 +70,7 @@ for predIter in os.listdir(predDir):
                 confusion_matrix += da.Nod.computeConfusion(nods, gtimg.dataobj, predimg.dataobj)
                 dice += da.Nod.DetectionDice(gtimg.dataobj, predimg.dataobj)
                 dicewoFP += da.Nod.DetectionDiceWoFP(gtimg.dataobj, predimg.dataobj)
+                
         finalDice = dice/img_count
         finalDicewoFP = dicewoFP/img_count
         print(confusion_matrix)
