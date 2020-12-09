@@ -45,6 +45,7 @@ for predIter in os.listdir(predDir):
         confusion_matrix = np.zeros((2, 2))
         dice = float(0)
         dicewoFP = float(0)
+        diceTP = float(0)
         img_count = 0
         for predFile in os.listdir(os.path.join(predDir, predIter, 'prediction')):
             if '.nii.gz' in predFile:
@@ -70,12 +71,15 @@ for predIter in os.listdir(predDir):
                 confusion_matrix += da.Nod.computeConfusion(nods, gtimg.dataobj, predimg.dataobj)
                 dice += da.Nod.DetectionDice(gtimg.dataobj, predimg.dataobj)
                 dicewoFP += da.Nod.DetectionDiceWoFP(gtimg.dataobj, predimg.dataobj)
+                diceTP += da.Nod.DetectionDiceTP(gtimg.dataobj, predimg.dataobj)
                 
         finalDice = dice/img_count
         finalDicewoFP = dicewoFP/img_count
+        finalDiceTP = diceTP/img_count
         print(confusion_matrix)
         print(finalDice)
         print(finalDicewoFP)
+        print(finalDiceTP)
         print(img_count)
         
         outDir = os.path.join(predDir, predIter, 'eval')
@@ -86,7 +90,7 @@ for predIter in os.listdir(predDir):
 
         paths = {}
 
-        for a in ['confusion', 'dice', 'woFP']:
+        for a in ['confusion', 'dice', 'woFP', 'TP']:
             paths[a] = os.path.join(outDir, '{}.txt'.format(a))
             count = 0
             while os.path.isfile(paths[a]):
@@ -104,3 +108,7 @@ for predIter in os.listdir(predDir):
         woFP = open(paths['woFP'], 'w+')
         woFP.write(str(finalDicewoFP))
         woFP.close()
+        
+        TP = open(paths['TP'], 'w+')
+        TP.write(str(finalDiceTP))
+        TP.close()
