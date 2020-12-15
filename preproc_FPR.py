@@ -36,7 +36,7 @@ labels_names = [name for name in gtnames if seg_tag in name]
 for label_name in labels_names:
     label_file = nib.load(os.path.join(gtDir, label_name))
     label_vol = np.array(label_file.dataobj).astype(np.int32)
-    img_num = (re.findall(r'[0-9]+', label_name))
+    img_num = (re.findall(r'[0-9]+', label_name)[0])
     vol_name = 'volume-{}.nii.gz'.format(img_num)
     img_file = nib.load(os.path.join(gtDir, vol_name))
     img_vol = np.array(img_file.dataobj).astype(np.float32)
@@ -47,13 +47,13 @@ for label_name in labels_names:
         for i in range(nodCount):
             tempVol = (labeledVol == (i+1))
                 x,y,z = np.nonzero(tempVol)
-                x1 = np.min(x)-10
-                x2 = np.max(x)+10
-                y1 = np.min(y)-10
-                y2 = np.max(y)+10
-                z1 = np.min(z)-10
-                z2 = np.max(z)+10
-                nodVol = (img_vol[x1:x2, y1:y2, z1:z2]).astype(float32)
+                x1 = np.min(x)-5
+                x2 = np.max(x)+5
+                y1 = np.min(y)-5
+                y2 = np.max(y)+5
+                z1 = np.min(z)-5
+                z2 = np.max(z)+5
+                nodVol = (img_vol[x1:x2, y1:y2, z1:z2]).astype(np.float32)
                 
                 if img_num in testingSet:
                     split = 'testing'
@@ -62,10 +62,10 @@ for label_name in labels_names:
                 else:
                     split = 'training'
                 
-                path_vol_save = os.join(outDir[split], '{}.h5'.format(total_nod_count))
+                path_vol_save = os.path.join(outDir[split], '{}.h5'.format(total_nod_count))
                 with h5py.File(path_vol_save, 'w') as h5f:
                     h5f.create_dataset('data', data=nodVol, dtype=np.float32)
-                path_label_save = os.join(outDir[split], '{}.txt'.format(total_nod_count))
+                path_label_save = os.path.join(outDir[split], '{}.txt'.format(total_nod_count))
                 with open(path_label_save, 'w+') as f:
                     f.write('1')
                     f.close()
