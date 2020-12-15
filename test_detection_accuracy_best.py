@@ -80,7 +80,7 @@ for predIter in os.listdir(predDir):
 
                 confusion_matrix += da.Nod.computeConfusion(nods, gtimg.dataobj, predimg.dataobj, best=True)
                 dice += da.Nod.DetectionDice(gtimg.dataobj, predimg.dataobj)
-                dicewoFP += da.Nod.DetectionDiceWoFP(gtimg.dataobj, predimg.dataobj, best=True)
+                dicewoFP += da.Nod.DetectionDicewoFP(gtimg.dataobj, predimg.dataobj, best=True)
                 diceTP += da.Nod.DetectionDiceTP(gtimg.dataobj, predimg.dataobj, best=True)
                 
         finalDice = dice/img_count
