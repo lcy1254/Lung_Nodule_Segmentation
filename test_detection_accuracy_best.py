@@ -14,7 +14,7 @@ import nodSize as size
 #from gtDir get files called 'labels-{}.nii.gz'.format(pid)
 #from predDir path: 'iter_{}/prediction/inferred_volume_{}_model_iter_{}.nii.gz'.format(iter, pid, iter)
 
-#or can just insert path to script 
+#or can just insert path to script
 
 #get gt and pred data location
 gtDir = sys.argv[1]
@@ -62,7 +62,7 @@ for predIter in os.listdir(predDir):
                 nods = {}
                 
                 if nod_num == 0:
-                    confusion_matrix += da.Nod.computeConfusion(nods, gtimg.dataobj, predimg.dataobj)
+                    confusion_matrix += da.Nod.computeConfusion(nods, gtimg.dataobj, predimg.dataobj, best=True)
                     img_count -= 1
                     continue
                         
@@ -74,13 +74,13 @@ for predIter in os.listdir(predDir):
                 
                 if tempCount == 0:
                     img_count -= 1
-                    confusion_matrix += da.Nod.computeConfusion(nods, gtimg.dataobj, predimg.dataobj)
+                    confusion_matrix += da.Nod.computeConfusion(nods, gtimg.dataobj, predimg.dataobj, best=True)
                     continue
 
-                confusion_matrix += da.Nod.computeConfusion(nods, gtimg.dataobj, predimg.dataobj)
-                dice += da.Nod.DetectionDice(gtimg.dataobj, predimg.dataobj)
-                dicewoFP += da.Nod.DetectionDiceWoFP(gtimg.dataobj, predimg.dataobj)
-                diceTP += da.Nod.DetectionDiceTP(gtimg.dataobj, predimg.dataobj)
+                confusion_matrix += da.Nod.computeConfusion(nods, gtimg.dataobj, predimg.dataobj, best=True)
+                dice += da.Nod.DetectionDice(gtimg.dataobj, predimg.dataobj, best=True)
+                dicewoFP += da.Nod.DetectionDiceWoFP(gtimg.dataobj, predimg.dataobj, best=True)
+                diceTP += da.Nod.DetectionDiceTP(gtimg.dataobj, predimg.dataobj, best=True)
                 
         finalDice = dice/img_count
         finalDicewoFP = dicewoFP/img_count
@@ -91,7 +91,7 @@ for predIter in os.listdir(predDir):
         print(finalDiceTP)
         print(img_count)
         
-        outDir = os.path.join(predDir, predIter, 'eval')
+        outDir = os.path.join(predDir, predIter, 'best')
         if not os.path.isdir(outDir):
             os.mkdir(outDir)
         
