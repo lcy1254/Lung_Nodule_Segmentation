@@ -7,7 +7,6 @@ from scipy.ndimage import label, generate_binary_structure
 import os
 import detection_accuracy as da
 import re
-import nodSize as size
 
 #Usage: test_detection_acc.py [gtDir] [predDir]
 #example: gtDir = '~/lung_nifti_files', predDir = '~/inference'
@@ -66,16 +65,8 @@ for predIter in os.listdir(predDir):
                     img_count -= 1
                     continue
                         
-                tempCount = 0
                 for i in range(nod_num):
                     nods[i] = da.Nod(labeled, i + 1)
-                    if size.nodDia(nods[i].array) >= 10:
-                        tempCount += 1
-                
-                if tempCount == 0:
-                    img_count -= 1
-                    confusion_matrix += da.Nod.computeConfusion(nods, gtimg.dataobj, predimg.dataobj)
-                    continue
 
                 confusion_matrix += da.Nod.computeConfusion(nods, gtimg.dataobj, predimg.dataobj)
                 dice += da.Nod.DetectionDice(gtimg.dataobj, predimg.dataobj)

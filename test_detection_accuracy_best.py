@@ -48,6 +48,7 @@ for predIter in os.listdir(predDir):
         dicewoFP = float(0)
         diceTP = float(0)
         img_count = 0
+        print(predIter)
         for predFile in os.listdir(os.path.join(predDir, predIter, 'prediction')):
             if '.nii.gz' in predFile:
                 img_num = (re.findall(r'[0-9]+', predFile))[0]
@@ -78,7 +79,7 @@ for predIter in os.listdir(predDir):
                     continue
 
                 confusion_matrix += da.Nod.computeConfusion(nods, gtimg.dataobj, predimg.dataobj, best=True)
-                dice += da.Nod.DetectionDice(gtimg.dataobj, predimg.dataobj, best=True)
+                dice += da.Nod.DetectionDice(gtimg.dataobj, predimg.dataobj)
                 dicewoFP += da.Nod.DetectionDiceWoFP(gtimg.dataobj, predimg.dataobj, best=True)
                 diceTP += da.Nod.DetectionDiceTP(gtimg.dataobj, predimg.dataobj, best=True)
                 
