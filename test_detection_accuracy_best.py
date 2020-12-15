@@ -64,7 +64,11 @@ for predIter in os.listdir(predDir):
                 confusion_matrix += da.Nod.computeConfusion(nods, gtimg.dataobj, predimg.dataobj, best=True)
                 dice += da.Nod.DetectionDice(gtimg.dataobj, predimg.dataobj)
                 dicewoFP += da.Nod.DetectionDicewoFP(gtimg.dataobj, predimg.dataobj, best=True)
-                if np.sum(np.array(gtimg.dataobj) & np.array(predimg.dataobj)) > 0:
+                
+                tempGt = np.array(gtimg.dataobj)
+                tempPred = np.array(predimg.dataobj)
+                
+                if np.sum(tempGt & tempPred) > 0:
                     diceTP += da.Nod.DetectionDiceTP(gtimg.dataobj, predimg.dataobj, best=True)
                 else:
                     TP_count += 1
