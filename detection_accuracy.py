@@ -45,7 +45,7 @@ class Nod:
         #in case two nodules are predicted in the area of one true nodule
         #should delete? because this would significantly lower the accuracy
         a = [labeledPred[x[i],y[i],z[i]] for i in range(len(x))]
-        vals = np.unique(a)
+        vals = list(np.unique(a))
         for val in vals:
             if a.count(val)< 0.2*numIntersect:
                 vals.remove(val)
