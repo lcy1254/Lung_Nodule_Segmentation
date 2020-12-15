@@ -22,24 +22,6 @@ predDir = sys.argv[2]
 
 assert os.path.isdir(gtDir)
 assert os.path.isdir(predDir)
-
-'''
-#get output location
-if len(sys.argv) == 4:
-    outDir = os.path.join(sys.argv[3], 'detection_accuracy')
-else:
-    outDir = os.path.join(predDir, 'detection_accuracy')
-
-if not os.path.isdir(outDir):
-    os.mkdir(outDir)
-
-assert os.path.isdir(outDir)
-
-confusion_matrix = np.zeros((2, 2))
-dice = float(0)
-dicewoFP = float(0)
-img_count = 0
-'''
     
 for predIter in os.listdir(predDir):
     if 'iter_' in predIter:
@@ -48,6 +30,7 @@ for predIter in os.listdir(predDir):
         dicewoFP = float(0)
         diceTP = float(0)
         img_count = 0
+        TP_count = 0
         print(predIter)
         for predFile in os.listdir(os.path.join(predDir, predIter, 'prediction')):
             if '.nii.gz' in predFile:
@@ -81,11 +64,15 @@ for predIter in os.listdir(predDir):
                 confusion_matrix += da.Nod.computeConfusion(nods, gtimg.dataobj, predimg.dataobj, best=True)
                 dice += da.Nod.DetectionDice(gtimg.dataobj, predimg.dataobj)
                 dicewoFP += da.Nod.DetectionDicewoFP(gtimg.dataobj, predimg.dataobj, best=True)
-                diceTP += da.Nod.DetectionDiceTP(gtimg.dataobj, predimg.dataobj, best=True)
+                if np.sum(np.array(gtimg.dataobj) & np.array(predimg.dataobj)) > 0:
+                    diceTP += da.Nod.DetectionDiceTP(gtimg.dataobj, predimg.dataobj, best=True)
+                else:
+                    TP_count += 1
                 
         finalDice = dice/img_count
         finalDicewoFP = dicewoFP/img_count
-        finalDiceTP = diceTP/img_count
+        finalDiceTP = diceTP/(img_count - TP_count)
+        #DiceTP is segmentation accuracy of TPs
         print(confusion_matrix)
         print(finalDice)
         print(finalDicewoFP)
