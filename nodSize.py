@@ -1,7 +1,7 @@
 import numpy as np
 from scipy.spatial.distance import pdist, squareform
 from skimage.segmentation import find_boundaries
-import cv2
+#import cv2
 import math
 
 def nodVol(nodArr):
