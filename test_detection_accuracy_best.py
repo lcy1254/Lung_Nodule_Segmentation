@@ -66,6 +66,7 @@ for predIter in os.listdir(predDir):
                 dicewoFP += da.Nod.DetectionDicewoFP(gtimg.dataobj, predimg.dataobj, best=True)
                 
                 tempGt = (np.array(gtimg.dataobj) == 1)
+                tempGt = da.Nod.bestMask(tempGt)
                 tempPred = (np.array(predimg.dataobj) == 1)
                 
                 if np.sum(tempGt & tempPred) > 0:

@@ -78,7 +78,7 @@ for predIter in os.listdir(predDir):
                 tempPred = np.array(predimg.dataobj)
                 
                 if np.sum(tempGt & tempPred) > 0:
-                    diceTP += da.Nod.DetectionDiceTP(gtimg.dataobj, predimg.dataobj, best=True)
+                    diceTP += da.Nod.DetectionDiceTP(gtimg.dataobj, predimg.dataobj)
                 else:
                     TP_count += 1
                 
