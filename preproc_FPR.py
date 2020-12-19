@@ -61,9 +61,9 @@ for label_name in labels_names:
             z2 = np.max(z)+5
             nodVol = (img_vol[x1:x2, y1:y2, z1:z2]).astype(np.float32)
             
-            if img_num in testingSet:
+            if total_nod_count in testingSet:
                 split = 'testing'
-            elif img_num in validationSet:
+            elif total_nod_count in validationSet:
                 split = 'validation'
             else:
                 split = 'training'
@@ -108,9 +108,9 @@ for predIter in os.listdir(predDir):
                             z2 = np.max(z)+5
                             nodVol = (img_vol[x1:x2, y1:y2, z1:z2]).astype(np.float32)
                             
-                            if img_num in testingSet:
+                            if total_nod_count in testingSet:
                                 split = 'testing'
-                            elif img_num in validationSet:
+                            elif total_nod_count in validationSet:
                                 split = 'validation'
                             else:
                                 split = 'training'
