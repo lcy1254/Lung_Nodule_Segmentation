@@ -21,7 +21,7 @@ for itername in iternames:
         tempconf = np.array(b, dtype = 'int').reshape((2,2))
     except ValueError:
         Fconf.close()
-        Fconf = open(os.path.join(predDir, predIter, 'best', 'confusion.txt'), 'r')
+        Fconf = open(os.path.join(predDir, itername, 'best', 'confusion.txt'), 'r')
         a = Fconf.readline().strip()
         a2 = Fconf.readline().strip()
         a = a.strip('[] ')
