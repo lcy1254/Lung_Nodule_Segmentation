@@ -29,8 +29,8 @@ for predIter in os.listdir(predDir):
             a2 = a2.strip('[] ')
             a = a.split()
             a2 = a2.split()
-            a = [int(val) for val in a]
-            a2 = [int(val) for val in a2]
+            a = [int(float(val)) for val in a]
+            a2 = [int(float(val)) for val in a2]
             tempconf = np.zeros((2,2))
             tempconf[0,0] = a[0]
             tempconf[0,1] = a[1]
