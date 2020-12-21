@@ -48,7 +48,7 @@ for predIter in os.listdir(predDir):
         
         try:
             FTP = open(os.path.join(predDir, predIter, 'best', 'TP.txt'), 'r')
-            tempTP = float(TP.read())
+            tempTP = float(FTP.read())
         except:
             FTP.close()
             FTP = open(os.path.join(predDir, predIter, 'best', 'woFP_1.txt'), 'r')
