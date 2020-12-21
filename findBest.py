@@ -23,8 +23,8 @@ for predIter in os.listdir(predDir):
         except ValueError:
             Fconf.close()
             Fconf = open(os.path.join(predDir, predIter, 'best', 'confusion.txt'), 'r')
-            a = Fconf.readline()
-            a2 = Fconf.readline()
+            a = Fconf.readline().strip()
+            a2 = Fconf.readline().strip()
             a = a.strip('[] ')
             a2 = a2.strip('[] ')
             a = a.split()
