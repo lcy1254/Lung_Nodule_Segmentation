@@ -20,6 +20,22 @@ for predIter in os.listdir(predDir):
             a = Fconf.read()
             b = re.findall(r'[0-9]+', a)
             tempconf = np.array(b, dtype = 'int').reshape((2,2))
+        except ValueError:
+            Fconf.close()
+            Fconf = open(os.path.join(predDir, predIter, 'best', 'confusion.txt'), 'r')
+            a = Fconf.readline()
+            a2 = Fconf.readline()
+            a = a.strip('[] ')
+            a2 = a2.strip('[] ')
+            a = a.split()
+            a2 = a2.split()
+            a = [int(val) for val in a]
+            a2 = [int(val) for val in a2]
+            tempconf = np.zeros((2,2))
+            tempconf[0,0] = a[0]
+            tempconf[0,1] = a[1]
+            tempconf[1,0] = a2[0]
+            tempconf[1,1] = a2[1] 
         except:
             Fconf.close()
             Fconf = open(os.path.join(predDir, predIter, 'best', 'confusion_1.txt'), 'r')
