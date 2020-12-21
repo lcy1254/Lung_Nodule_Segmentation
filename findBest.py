@@ -5,7 +5,11 @@ import numpy as np
 predDir = '/data/lung_seg/inference'
 
 confIter = 0
+confIter2 = 0
+confIter3 = 0
 confusion_matrix = np.zeros((2,2)) #compare true postives
+confusion_matrix_2 = np.zeros((2,2))
+confusion_matrix_3 = np.zeros((2,2))
 diceIter = 0
 dice = float(0)
 woFPIter = 0
@@ -76,8 +80,20 @@ for predIter in os.listdir(predDir):
         FTP.close()
         
         if tempconf[0,0] > confusion_matrix[0,0]:
-            confusion_matrix = tempconf
+            confIter3 = confIter2
+            confIter2 = confIter
             confIter = re.findall(r'[0-9]+', predIter)
+            confusion_matrix_3 = confusion_matrix_2
+            confusion_matrix_2 = confusion_matrix
+            confusion_matrix = tempconf
+        elif tempconf[0,0] > confusion_matrix_2[0,0]:
+            confusion_matrix_3 = confusion_matrix_2
+            confusion_matrix_2 = tempconf
+            confIter3 = confIter2
+            confIter2 = re.findall(r'[0-9]+', predIter)
+        elif tempconf[0,0] > confusion_matrix_3[0,0]:
+            confusion_matrix_3 = tempconf
+            confIter3 = re.findall(r'[0-9]+', predIter)
         if tempdice > dice:
             dice = tempdice
             diceIter = re.findall(r'[0-9]+', predIter)
@@ -90,6 +106,10 @@ for predIter in os.listdir(predDir):
 
 print('confusion matrix: \n' + str(confusion_matrix))
 print('confusion iter: ' + str(confIter))
+print('confusion matrix 2: \n' + str(confusion_matrix_2))
+print('confusion iter 2: ' + str(confIter2))
+print('confusion matrix 3: \n' + str(confusion_matrix_3))
+print('confusion iter 3: ' + str(confIter3))
 print('dice: ' + str(dice))
 print('dice iter: ' + str(diceIter))
 print('woFP: ' + str(dicewoFP))
