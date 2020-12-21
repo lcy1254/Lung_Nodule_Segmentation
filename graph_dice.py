@@ -86,4 +86,4 @@ with open('/home/lcy/TP.txt', 'w+') as f:
     for num in TP:
         f.write('%s\n' % num)
 with open('/home/lcy/confusion.txt', 'w+') as f:
-    f.write(confusion_matrix)
+    f.write(str(confusion_matrix))
