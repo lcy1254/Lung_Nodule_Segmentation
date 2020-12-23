@@ -88,9 +88,10 @@ elif mode == 'baselines-1mm':
         tag = 'mint-baseline'
 elif mode == 'ct_lung': 
         path_nii = '/data/lung_seg/lung_nifti_files'
-        path_h5 = {'training' : '/data/lung_seg/training',
-                   'validation': '/data/lung_seg/validation'}
-        validationSet = list(np.arange(1, 1000, 7)) 
+        path_h5 = {'training' : '/data/lung_seg/training_2',
+                   'validation': '/data/lung_seg/validation_2'}
+        validationSet = list(np.arange(1, 900, 3))
+        validationSet.concatenate(list(range(901, 1000)))
 else:
         raise ValueError('Unrecognized mode: ' + mode)
 
