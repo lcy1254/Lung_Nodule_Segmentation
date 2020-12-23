@@ -92,8 +92,6 @@ elif mode == 'ct_lung':
                    'validation': '/data/lung_seg/validation_2'}
         validationSet = list(np.arange(1, 900, 3))
         validationSet.extend(list(range(901, 1000)))
-        print(validationSet)
-        dfsdfsd
 else:
         raise ValueError('Unrecognized mode: ' + mode)
 
