@@ -17,6 +17,7 @@ outDir = {'training': '/data/lung_seg/FPR/nodule_files/training', 'testing': '/d
 predIters = ['iter_11101', 'iter_11851', 'iter_12051', 'iter_13301', 'iter_11051'] #add more numbers
 tpPredIters = ['iter_11101', 'iter_11051', 'iter_11851']
 validationSet = list(np.arange(3,2000,10)) + list(np.arange(7000, 10000, 10)) + list(np.arange(15000,18000,10))
+testingSet = []
 '''
 gtDir = '/Volumes/Transcend/nifti_files/lung_nifti_files'
 predDir = '/Users/ChaeyoungLee/Downloads/inference2'
