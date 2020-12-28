@@ -54,7 +54,7 @@ with tf.device('/GPU:0'):
     #Track accuracy and loss in real-time
     #if jupyter notebook:
     log_dir = "/data/lung_seg/FPR/VGG16/logs/fit/" + datetime.datetime.now().strftime("%Y%m%d-%H%M%S")
-    file_writer = tf.summary.create_file_writer(logdir + "/metrics")
+    file_writer = tf.summary.create_file_writer(log_dir + "/metrics")
     file_writer.set_as_default()
 
     #python script
@@ -62,7 +62,7 @@ with tf.device('/GPU:0'):
     history = mh.MetricsHistory(saving_path=os.path.join(saving_path,'metricsHistory', current_file_name+'.csv'))
 
     #Checkpoints
-    checkpoints = ModelCheckpoint(logdir + '/checkpoints/' + current_file_name + '_{epoch:02d}' + '.hd5f', save_weights_only=True, period=period_checkpoint)
+    checkpoints = ModelCheckpoint(log_dir + '/checkpoints/' + current_file_name + '_{epoch:02d}' + '.hd5f', save_weights_only=True, period=period_checkpoint)
 
     if mode_run == 'train':
         #Compile
