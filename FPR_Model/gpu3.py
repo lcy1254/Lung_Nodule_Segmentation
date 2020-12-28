@@ -9,11 +9,11 @@ import re
 from tensorflow import keras
 import datetime
 
-from keras.callbacks import ModelCheckpoint
-from keras.initializers import RandomNormal
-from keras.optimizers import Adam
-from keras.regularizers import l2
-from keras import backend as K
+from tf.keras.callbacks import ModelCheckpoint
+from tf.keras.initializers import RandomNormal
+from tf.keras.optimizers import Adam
+from tf.keras.regularizers import l2
+from tf.keras import backend as K
 
 import metricsHistory as mh
 
@@ -77,10 +77,10 @@ with tf.device('/GPU:0'):
             tf.summary.scalar('learning rate', data=learning_rate, step=epoch)
             return learning_rate
             
-        lr_callback = keras.callbacks.LearningRateScheduler(scheduler)
+        lr_callback = tf.keras.callbacks.LearningRateScheduler(scheduler)
         tensorboard = TensorBoard(log_dir = log_dir, histogram_freq = 1)
         
-        model.compile(optimizer=keras.optimizers.Adam(), loss='binary_crossentropy', metrics=['accuracy'])
+        model.compile(optimizer=tf.keras.optimizers.Adam(), loss='binary_crossentropy', metrics=['accuracy'])
         model.fit_generator(generator=training_generator, epochs=max_epochs, verbose=1, validation_data=validation_generator, callbacks=[history, checkpoints, lr_callback, tensorboard])
         
     K.clear_session()
