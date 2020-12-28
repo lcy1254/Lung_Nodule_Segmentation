@@ -38,8 +38,8 @@ with tf.device('/GPU:0'):
     trainingdataDir = '/data/lung_seg/FPR/nodule_files/training'
     validationdataDir = '/data/lung_seg/FPR/nodule_files/validation'
 
-    traininglistIDs = [re.findall(r'[0-9]+', file)[0] for file in os.listDir(trainingdataDir) if '.h5' in file]
-    validationlistIDs = [re.findall(r'[0-9]+', file)[0] for file in os.listDir(validationdataDir) if '.h5' in file]
+    traininglistIDs = [re.findall(r'[0-9]+', file)[0] for file in os.listdir(trainingdataDir) if '.h5' in file]
+    validationlistIDs = [re.findall(r'[0-9]+', file)[0] for file in os.listdir(validationdataDir) if '.h5' in file]
 
     training_generator = volume.DataGenerator(traininglistIDs, trainingdataDir, batch_size, v_size=sideLength, n_channels=1, n_classes=n_classes, shuffle=True)
 
