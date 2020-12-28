@@ -3,11 +3,12 @@ load data & preprocess & perform augmentation
 
 adapted from https://github.com/shervinea/enzynet and https://keras.io/examples/vision/3D_image_classification/
 '''
+import tensorflow as tf
 from tensorflow import keras
 import numpy as np
 from scipy import ndimage
 
-class DataGenerator(keras.utils.Sequence):
+class DataGenerator(tf.keras.utils.Sequence):
     'Generates data for Keras'
     def __init__(self, listIDs, dataDir, batch_size=32, v_size=50, n_channels=1, n_classes=2, shuffle=True):
         #adjust v_size as necessary !!
