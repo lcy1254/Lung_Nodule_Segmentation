@@ -9,11 +9,11 @@ import re
 from tensorflow import keras
 import datetime
 
-from tf.keras.callbacks import ModelCheckpoint
-from tf.keras.initializers import RandomNormal
-from tf.keras.optimizers import Adam
-from tf.keras.regularizers import l2
-from tf.keras import backend as K
+from tensorflow.keras.callbacks import ModelCheckpoint
+from tensorflow.keras.initializers import RandomNormal
+from tensorflow.keras.optimizers import Adam
+from tensorflow.keras.regularizers import l2
+from tensorflow.keras import backend as K
 
 import metricsHistory as mh
 
