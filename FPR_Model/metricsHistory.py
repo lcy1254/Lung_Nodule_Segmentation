@@ -10,7 +10,7 @@ import itertools
 
 import numpy as np
 
-from keras.callbacks import Callback
+from tensorflow.keras.callbacks import Callback
 
 class MetricsHistory(Callback):
     """
