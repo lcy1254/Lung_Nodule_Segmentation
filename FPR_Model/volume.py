@@ -35,6 +35,9 @@ class DataGenerator(keras.utils.Sequence):
         X = np.empty((self.batch_size, self.v_size, self.v_size, self.v_size, self.n_channels))
         y = np.empty((self.batch_size), dtype=int)
         
+        aug = {'rotate':None, 'shift':None, 'flip':None}
+        choices = [True, False]
+        
         for i, ID in enumerate(temp_listIDs):
             # Load data
             tempX = read_h5_file(os.path.join(self.dataDir, '{}.h5'.format(ID)))
@@ -42,15 +45,18 @@ class DataGenerator(keras.utils.Sequence):
             
             # Preprocessing
             tempX = normalize(tempX)
-            tempX = resize_volume(tempX, self.v_size)
+            
+            aug['rotate'] = random.choice(choices)
+            aug['shift'] = random.choice(choices)
+            aug['flip'] = random.choice(choices)
             
             # Data Augmentation
-            tempX = rotate(tempX)
-            #tempX = shift(tempX)
-            tempX = flip(tempX)
+            if aug['rotate'] == True: tempX = rotate(tempX)
+            if aug['shift'] == True: tempX = shift(tempX)
+            if aug['flip'] == True: tempX = flip(tempX)
             
-            # Add another dim
-            tempX = np.expand_dims(tempX, axis=3)
+            #resize to 50*50*50 with zero padding after augmentation
+            tempX = resize_volume(tempX, self.v_size)
             
             # Store sample
             X[i,] = tempX
@@ -101,43 +107,55 @@ def normalize(volume):
 def resize_volume(img, sideLength):
     sideLength = sideLength #change later
     
-    curDepth = img.shape[-1]
+    curDepth = img.shape[2]
     curWidth = img.shape[0]
     curHeight = img.shape[1]
     
-    if curDepth<=sideLength and curWidth<=sideLength and curHeight<=sideLength:
-        vol = np.ones((sideLength,sideLength,sideLength),dtype='float32')*-1000
-        vol[:curWidth,:curHeight,:curDepth] = img
-    else:
-        print('img size bigger than {}'.format(sideLength))
-        vol = img[:sideLength, :sideLength, :sideLength]
+    if curDepth>sideLength: curDepth=50
+    if curWidth>sideLength: curWidth=50
+    if curHeight>sideLength: curHeight=50
+    
+    vol = np.zeros((sideLength,sideLength,sideLength,1),dtype='float32')
+    halfWidth = int(curWidth/2)
+    halfHeight = int(curHeight/2)
+    halfDepth = int(curDepth/2)
+    startWidth = int((sideLength/2)-halfWidth)
+    startHeight = int((sideLength/2)-halfHeight)
+    startDepth = int((sideLength/2)-halfDepth)
+    if startWidth<0: startWidth = 0
+    if startHeight<0: startHeight = 0
+    if startDepth<0: startDepth = 0
+    endWidth = int(startWidth+curWidth)
+    endHeight = int(startHeight+curHeight)
+    endDepth = int(startDepth+curDepth)
+    vol[startWidth:endWidth,startHeight:endHeight,startDepth:endDepth,:] = img[:curWidth,:curHeight,:curDepth,:]
+    
     return vol
 
 def rotate(volume):
     """Rotate the volume by a few degrees"""
     vol = np.copy(volume)
     # define some rotation angles
-    angles = [-20, -10, -5, 0, 5, 10, 20]
+    angles = [-20, -10, -5, 5, 10, 20]
     # pick angles at random
     angle = random.choice(angles)
     # rotate volume
-    vol = ndimage.rotate(vol, angle, reshape=False, cval=-1000)
+    vol = ndimage.rotate(vol, angle, reshape=False)
     return vol
 
 def shift(volume):
-    #don't use yet -- image is located at corner
     '''shift image'''
     vol = np.copy(volume)
     #define some shift values
-    shifts = [5, 10, 15]    #edit these values later
+    shifts = [-15, -10, -5, 5, 10, 15]    #edit these values later
     shift = random.choice(shifts)
-    vol = ndimage.shift(vol, shift, cval=-1000)
+    vol = ndimage.shift(vol, shift)
     return vol
     
 def flip(volume):
     '''flip image'''
     vol = np.copy(volume)
-    flips = [(0,0),(0),(0,1),(0,2),(0,1,2),(2),(2,1),(1)]
+    flips = [(0),(0,1),(0,2),(0,1,2),(2),(2,1),(1)]
     flip = random.choice(flips)
     vol = np.flip(vol, flip)
     return vol
