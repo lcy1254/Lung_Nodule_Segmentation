@@ -4,7 +4,6 @@ load data & preprocess & perform augmentation
 adapted from https://github.com/shervinea/enzynet and https://keras.io/examples/vision/3D_image_classification/
 '''
 
-import keras
 import numpy as np
 from scipy import ndimage
 
