@@ -7,6 +7,7 @@ import time, random
 import math
 import os.path
 import itertools
+import csv
 
 import numpy as np
 
@@ -44,3 +45,9 @@ class MetricsHistory(Callback):
                       'accs': self.accs,
                       'val_accs': self.val_accs}
         dict_to_csv(dictionary, self.saving_path)
+
+def dict_to_csv(dictionary, path):
+    'Saves Python dictionary to a csv file'
+    w = csv.writer(open(path, 'w'))
+    for key, val in dictionary.items():
+        w.writerow([key, val])
