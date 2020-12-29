@@ -16,7 +16,10 @@ from tensorflow.keras import backend as K
 import metricsHistory as mh
 
 gpus = tf.config.experimental.list_physical_devices('GPU')
-tf.config.experimental.set_memory_growth(gpus[0,1,2,3], True)
+tf.config.experimental.set_memory_growth(gpus[0], True)
+tf.config.experimental.set_memory_growth(gpus[1], True)
+tf.config.experimental.set_memory_growth(gpus[2], True)
+tf.config.experimental.set_memory_growth(gpus[3], True)
 
 strategy = tf.distribute.MirroredStrategy()
 with strategy.scope():
