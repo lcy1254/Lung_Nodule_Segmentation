@@ -24,9 +24,9 @@ mode_run = 'train' #train or test
 ##----------------------------- Parameters -----------------------------------##
 n_classes = 2
 sideLength = 50
-batch_size = 16
-max_epochs = 200
-period_checkpoint = 50
+batch_size = 32
+max_epochs = 50
+period_checkpoint = 1
 current_file_name = os.path.basename(__file__)[:-3]
 
 ##------------------------------ Dataset -------------------------------------##
@@ -65,11 +65,11 @@ if mode_run == 'train':
     #Compile
     def scheduler(epoch, lr):
         learning_rate = 0.1
-        if epoch > 30:
+        if epoch > 10:
             learning_rate = 0.02
-        if epoch > 50:
+        if epoch > 15:
             learning_rate = 0.01
-        if epoch > 100:
+        if epoch > 30:
             learning_rate = 0.005
         tf.summary.scalar('learning rate', data=learning_rate, step=epoch)
         return learning_rate
