@@ -24,7 +24,7 @@ mode_run = 'train' #train or test
 ##----------------------------- Parameters -----------------------------------##
 n_classes = 2
 sideLength = 50
-batch_size = 4
+batch_size = 16
 max_epochs = 200
 period_checkpoint = 50
 current_file_name = os.path.basename(__file__)[:-3]
