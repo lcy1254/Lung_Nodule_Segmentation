@@ -67,7 +67,7 @@ with strategy.scope():
     saving_path = os.path.join(saving_path, 'metricsHistory')
     if not os.path.isdir(saving_path):
         os.mkdir(saving_path)
-    history = mh.MetricsHistory(saving_path=os.path.join(saving_path,'metricsHistory', current_file_name+'.csv'))
+    history = mh.MetricsHistory(saving_path=os.path.join(saving_path, current_file_name+'.csv'))
 
     #Checkpoints
     checkpoints = ModelCheckpoint(log_dir + '/checkpoints/' + current_file_name + '_{epoch:02d}' + '.hd5f', save_weights_only=True, period=period_checkpoint)
