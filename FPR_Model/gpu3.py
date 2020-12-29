@@ -75,19 +75,19 @@ with strategy.scope():
     if mode_run == 'train':
         #Compile
         def scheduler(epoch, lr):
-            learning_rate = 0.01
+            learning_rate = 0.001
             if epoch > 10:
-                learning_rate = 0.002
-            if epoch > 15:
                 learning_rate = 0.0001
+            if epoch > 15:
+                learning_rate = 0.00001
             if epoch > 30:
-                learning_rate = 0.00005
+                learning_rate = 0.000005
             tf.summary.scalar('learning rate', data=learning_rate, step=epoch)
             return learning_rate
             
         lr_callback = tf.keras.callbacks.LearningRateScheduler(scheduler)
         tensorboard = TensorBoard(log_dir = log_dir, histogram_freq = 1)
         
-        model.compile(optimizer=tf.keras.optimizers.Adam(), loss='binary_crossentropy', metrics=['accuracy'])
+        model.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
         
         model.fit_generator(generator=training_generator, epochs=max_epochs, verbose=1, validation_data=validation_generator, callbacks=[history, checkpoints, lr_callback, tensorboard])
