@@ -9,7 +9,7 @@ import numpy as np
 from scipy import ndimage
 import os
 import h5py
-import random 
+import random
 
 class DataGenerator(tf.keras.utils.Sequence):
     'Generates data for Keras'
@@ -114,9 +114,9 @@ def resize_volume(img, sideLength):
     curWidth = img.shape[0]
     curHeight = img.shape[1]
     
-    if curDepth>sideLength: curDepth=50
-    if curWidth>sideLength: curWidth=50
-    if curHeight>sideLength: curHeight=50
+    if curDepth>sideLength: curDepth=sideLength
+    if curWidth>sideLength: curWidth=sideLength
+    if curHeight>sideLength: curHeight=sideLength
     
     vol = np.zeros((sideLength,sideLength,sideLength,1),dtype='float32')
     halfWidth = int(curWidth/2)
