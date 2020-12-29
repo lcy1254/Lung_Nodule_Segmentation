@@ -48,6 +48,6 @@ class MetricsHistory(Callback):
 
 def dict_to_csv(dictionary, path):
     'Saves Python dictionary to a csv file'
-    w = csv.writer(open(path, 'w'))
+    w = csv.writer(open(path, 'w+'))
     for key, val in dictionary.items():
         w.writerow([key, val])

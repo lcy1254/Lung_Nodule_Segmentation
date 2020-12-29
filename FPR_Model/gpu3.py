@@ -62,6 +62,11 @@ with strategy.scope():
 
     #python script
     saving_path = log_dir
+    if not os.path.isdir(saving_path):
+        os.mkdir(saving_path)
+    saving_path = os.path.join(saving_path, 'metricsHistory')
+    if not os.path.isdir(saving_path):
+        os.mkdir(saving_path)
     history = mh.MetricsHistory(saving_path=os.path.join(saving_path,'metricsHistory', current_file_name+'.csv'))
 
     #Checkpoints
