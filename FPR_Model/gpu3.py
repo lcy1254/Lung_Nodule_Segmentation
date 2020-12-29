@@ -8,6 +8,7 @@ import tensorflow as tf
 import re
 from tensorflow import keras
 import datetime
+from tensorflow.keras.callbacks import TensorBoard
 
 from tensorflow.keras.callbacks import ModelCheckpoint
 from tensorflow.keras.initializers import RandomNormal
