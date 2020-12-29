@@ -29,7 +29,7 @@ with strategy.scope():
 
     ##----------------------------- Parameters -----------------------------------##
     n_classes = 2
-    sideLength = 50
+    sideLength = 48
     batch_size = 16
     max_epochs = 50
     period_checkpoint = 1
@@ -75,13 +75,13 @@ with strategy.scope():
     if mode_run == 'train':
         #Compile
         def scheduler(epoch, lr):
-            learning_rate = 0.1
+            learning_rate = 0.01
             if epoch > 10:
-                learning_rate = 0.02
+                learning_rate = 0.002
             if epoch > 15:
-                learning_rate = 0.01
+                learning_rate = 0.0001
             if epoch > 30:
-                learning_rate = 0.005
+                learning_rate = 0.00005
             tf.summary.scalar('learning rate', data=learning_rate, step=epoch)
             return learning_rate
             
