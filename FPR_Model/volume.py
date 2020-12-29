@@ -7,7 +7,8 @@ import tensorflow as tf
 from tensorflow import keras
 import numpy as np
 from scipy import ndimage
-import os 
+import os
+import h5py 
 
 class DataGenerator(tf.keras.utils.Sequence):
     'Generates data for Keras'
