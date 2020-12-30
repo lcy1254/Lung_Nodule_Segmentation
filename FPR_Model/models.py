@@ -112,7 +112,7 @@ def alexNet(sideLength):
     x = layers.Dense(4096, activation='relu')(x)
     x = layers.Dropout(0.5)(x)
     x = layers.Dense(4096, activation='relu')(x)
-    x = layers.dropout(0.5)(x)
+    x = layers.Dropout(0.5)(x)
     output = layers.Dense(1, activation='sigmoid')(x)
     
     model = keras.Model(input, output, name='AlexNet')
