@@ -13,7 +13,7 @@ import random
 
 class DataGenerator(tf.keras.utils.Sequence):
     'Generates data for Keras'
-    def __init__(self, listIDs, dataDir, batch_size=32, v_size=50, n_channels=1, n_classes=2, shuffle=True):
+    def __init__(self, listIDs, dataDir, batch_size=32, v_size, n_channels=1, n_classes=2, shuffle=True):
         #adjust v_size as necessary !!
         'Initialization'
         self.v_size = v_size
@@ -65,6 +65,60 @@ class DataGenerator(tf.keras.utils.Sequence):
             X[i,] = tempX
             # Store class
             y[i] = tempy
+      
+        return X, y
+        
+    def __len__(self):
+        'Denotes the number of batches per epoch'
+        return int(np.floor(len(self.listIDs) / self.batch_size))
+    
+    def __getitem__(self, index):
+        'Generate one batch of data'
+        #Generate indexes of the batch
+        indexes = self.indexes[index*self.batch_size:(index+1)*self.batch_size]
+        
+        #Find list of IDs
+        temp_listIDs = [self.listIDs[i] for i in indexes]
+        
+        #Generate data
+        X, y = self.__data_generation(temp_listIDs)
+        
+        return X, y
+        
+class testDataGenerator(tf.keras.utils.Sequence):
+    'Generates data for Keras'
+    def __init__(self, listIDs, dataDir, batch_size=32, v_size):
+        #adjust v_size as necessary !!
+        'Initialization'
+        self.v_size = v_size
+        self.batch_size = batch_size
+        self.listIDs = listIDs
+        self.dataDir = dataDir
+            
+    def __data_generation(self, temp_listIDs):
+        'Generates data containing batch_size samples'
+        # X : (n_samples, *dim, n_channels)
+        #Initialization
+        X = np.empty((self.batch_size, self.v_size, self.v_size, self.v_size, self.n_channels))
+        y = np.empty((self.batch_size), dtype=int)
+        
+        for i, ID in enumerate(temp_listIDs):
+            # Load data
+            tempX = read_h5_file(os.path.join(self.dataDir, '{}.h5'.format(ID)))
+            tempy = read_txt_file(os.path.join(self.dataDir, '{}.txt'.format(ID)))
+            
+            # Preprocessing
+            tempX = normalize(tempX)
+            
+            #resize to 50*50*50 with zero padding after augmentation
+            tempX = resize_volume(tempX, self.v_size)
+            
+            # Store sample
+            X[i,] = tempX
+            # Store class
+            y[i] = tempy
+            
+            print('index: {}// ID: {}// true class: {}'.format(i, ID, tempy.strip()))
       
         return X, y
         
