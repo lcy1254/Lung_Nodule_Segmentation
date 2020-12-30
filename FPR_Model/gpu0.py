@@ -33,7 +33,7 @@ with strategy.scope():
     batch_size = 16
     max_epochs = 50
     period_checkpoint = 1
-    class_weight = {0: 1.0, 1: 2.0}
+    class_weight = {0: 0.6, 1: 3.4}
     current_file_name = os.path.basename(__file__)[:-3]
 
     ##------------------------------ Dataset -------------------------------------##
