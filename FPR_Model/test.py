@@ -1,9 +1,9 @@
 import numpy as np
 import tensorflow as tf
 import models
-import volume
+from volume import testDataGenerator
 import re
-import os 
+import os
 
 gpus = tf.config.experimental.list_physical_devices('GPU')
 tf.config.experimental.set_memory_growth(gpus[0], True)
@@ -18,7 +18,7 @@ with strategy.scope():
     batch_size = 16
     sideLength = 48
     
-    test_generator = volume.testDataGenerator(testinglistIDs, testDir, batch_size=batch_size, v_size=sideLength)
+    test_generator = testDataGenerator(testinglistIDs, testDir, batch_size=batch_size, v_size=sideLength)
     model = models.VGG16(sideLength)
 
     # Load best weights.
