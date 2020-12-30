@@ -134,15 +134,15 @@ def resNet(sideLength):
     
     #at the end
     x = layers.GlobalAveragePooling3D()(x)
-    x = BatchNormalization()(x)
-    x = Activation('relu')(x)
-    x = Flatten()(x)
-    x = Dense(512, activation='relu')(x)
-    x = Dropout(0.2)(x)
+    x = layers.BatchNormalization()(x)
+    x = layers.Activation('relu')(x)
+    x = layers.Flatten()(x)
+    x = layers.Dense(512, activation='relu')(x)
+    x = layers.Dropout(0.2)(x)
     #try no dropout
-    x = Dense(256, activation='relu')(x)
-    x = Dropout(0.2)(x)
-    output = Dense(1, activation='sigmoid')(x)
+    x = layers.Dense(256, activation='relu')(x)
+    x = layers.Dropout(0.2)(x)
+    output = layers.Dense(1, activation='sigmoid')(x)
     
     model = keras.Model(input, output, name='resnet')
     return model
