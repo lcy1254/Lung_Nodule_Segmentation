@@ -33,6 +33,7 @@ with strategy.scope():
     batch_size = 16
     max_epochs = 50
     period_checkpoint = 1
+    class_weight = {0: 1.0, 1: 2.0} 
     current_file_name = os.path.basename(__file__)[:-3]
 
     ##------------------------------ Dataset -------------------------------------##
@@ -90,4 +91,4 @@ with strategy.scope():
         
         model.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
         
-        model.fit_generator(generator=training_generator, epochs=max_epochs, verbose=1, validation_data=validation_generator, callbacks=[history, checkpoints, lr_callback, tensorboard])
+        model.fit_generator(generator=training_generator, epochs=max_epochs, verbose=1, validation_data=validation_generator, callbacks=[history, checkpoints, lr_callback, tensorboard], class_weight=class_weight)

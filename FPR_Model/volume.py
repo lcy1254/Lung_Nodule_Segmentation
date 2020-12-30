@@ -120,7 +120,7 @@ class testDataGenerator(tf.keras.utils.Sequence):
             # Store class
             y[i] = tempy
             
-            print('index: {}// ID: {}// true class: {}'.format(i, ID, tempy))
+            #print('index: {}// ID: {}// true class: {}'.format(i, ID, tempy))
       
         return X, y
         

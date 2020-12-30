@@ -28,7 +28,7 @@ with strategy.scope():
 
     # Load best weights.
     model.load_weights("/data/lung_seg/FPR/VGG16/logs/fit/20201229-021400/checkpoints/gpu3_40.hd5f")
-    prediction = model.predict(test_generator, verbose=1, steps=step)
+    prediction = model.evaluate(test_generator, verbose=1)
     
     savePath = '/data/lung_seg/FPR/VGG16/logs/fit/20201229-021400'
     with open(os.path.join(savePath, 'prediction.txt'), 'w+') as f:
