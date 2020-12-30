@@ -95,6 +95,7 @@ class testDataGenerator(tf.keras.utils.Sequence):
         self.listIDs = listIDs
         self.dataDir = dataDir
         self.indexes = np.arange(len(self.listIDs))
+        self.n_channels = n_channels
             
     def __data_generation(self, temp_listIDs):
         'Generates data containing batch_size samples'
