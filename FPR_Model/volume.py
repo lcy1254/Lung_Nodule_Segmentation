@@ -10,10 +10,10 @@ from scipy import ndimage
 import os
 import h5py
 import random
-'''
+
 class DataGenerator(tf.keras.utils.Sequence):
     'Generates data for Keras'
-    def __init__(self, listIDs, dataDir, batch_size=32, v_size, n_channels=1, n_classes=2, shuffle=True):
+    def __init__(self, listIDs, dataDir, v_size, batch_size=32, n_channels=1, n_classes=2, shuffle=True):
         #adjust v_size as necessary !!
         'Initialization'
         self.v_size = v_size
@@ -84,10 +84,10 @@ class DataGenerator(tf.keras.utils.Sequence):
         X, y = self.__data_generation(temp_listIDs)
         
         return X, y
-'''
+
 class testDataGenerator(tf.keras.utils.Sequence):
     'Generates data for Keras'
-    def __init__(self, listIDs, dataDir, batch_size=32, v_size):
+    def __init__(self, listIDs, dataDir, v_size, batch_size=32):
         #adjust v_size as necessary !!
         'Initialization'
         self.v_size = v_size
