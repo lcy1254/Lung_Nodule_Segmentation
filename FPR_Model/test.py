@@ -29,10 +29,10 @@ with strategy.scope():
     model = models.VGG16(sideLength)
     
     for epoch in epochs:
-        model.load_weights("/data/lung_seg/FPR/VGG16/logs/fit/20201229-021400/checkpoints/gpu3_{}.hd5f".format(str(epoch).zfill(2)))
+        model.load_weights("/data/lung_seg/FPR/alexNet/logs/fit/2020/12/30-00:33:31/checkpoints/gpu0_{}.hd5f".format(str(epoch).zfill(2)))
         model.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
         prediction = model.evaluate(test_generator, verbose=1)
         
-        savePath = '/data/lung_seg/FPR/VGG16/logs/fit/20201229-021400'
+        savePath = '/data/lung_seg/FPR/alexNet/logs/fit/2020/12/30-00:33:31'
         with open(os.path.join(savePath, 'prediction_epoch{}.txt'.format(epoch)), 'w+') as f:
             f.write(str(prediction))
