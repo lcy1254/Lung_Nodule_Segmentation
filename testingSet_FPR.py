@@ -51,7 +51,7 @@ for label_name in labels_names:
         labeledVol, nodCount = label(labels, s)
         for i in range(nodCount):
             noduleVol = (labeledVol == (i+1))
-            saveNodule(noduleVol, volume, 1, testingSet, validationSet, outDir, total_nod_count)
+            saveNodule(noduleVol, volume, 1, outDir, total_nod_count)
             total_nod_count += 1
 
 #get false positives (class=0)
@@ -77,7 +77,7 @@ for predIter in os.listdir(predDir):
                         prednoduleVol = (predLabeledVol == (i+1))
                         if gtnodCount == 0:
                             print(str('gtnodcount is 0'))
-                            saveNodule(prednoduleVol, img_vol, 0, testingSet, validationSet, outDir, total_nod_count)
+                            saveNodule(prednoduleVol, img_vol, 0, outDir, total_nod_count)
                             total_nod_count += 1
                             continue
                         intersects = []
@@ -90,8 +90,8 @@ for predIter in os.listdir(predDir):
                         index = intersects[temp.index(maxIntersect)][1]
                         temp_gt_label_vol = (gtLabeledVol == index)
                         if maxIntersect < 0.15*np.sum(temp_gt_label_vol):
-                            saveNodule(prednoduleVol, img_vol, 0, testingSet, validationSet, outDir, total_nod_count)
+                            saveNodule(prednoduleVol, img_vol, 0, outDir, total_nod_count)
                             total_nod_count += 1
                         elif maxIntersect >= 0.3*np.sum(temp_gt_label_vol):
-                            saveNodule(prednoduleVol, img_vol, 1, testingSet, validationSet, outDir, total_nod_count)
+                            saveNodule(prednoduleVol, img_vol, 1, outDir, total_nod_count)
                             total_nod_count += 1
