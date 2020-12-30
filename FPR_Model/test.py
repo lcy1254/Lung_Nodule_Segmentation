@@ -26,7 +26,7 @@ with strategy.scope():
     sideLength = 48
     
     test_generator = testDataGenerator(testinglistIDs, testDir, batch_size=batch_size, v_size=sideLength)
-    model = models.VGG16(sideLength)
+    model = models.alexNet(sideLength)
     
     for epoch in epochs:
         model.load_weights("/data/lung_seg/FPR/alexNet/logs/fit/2020/12/30-00:33:31/checkpoints/gpu0_{}.hd5f".format(str(epoch).zfill(2)))
