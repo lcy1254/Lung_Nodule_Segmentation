@@ -122,7 +122,7 @@ def resNet(sideLength):
     '''resNet 3D implementation'''
     input = keras.Input(shape=(sideLength, sideLength, sideLength, 1))
     
-    x = layers.Conv3D(filters=64, kernel_size=7, strides=2, padding='same')(x)
+    x = layers.Conv3D(filters=64, kernel_size=7, strides=2, padding='same')(input)
     x = layers.BatchNormalization()(x)
     x = layers.Activation('relu')(x)
     x = layers.MaxPooling3D((3,3,3), strides=(2,2,2))(x)
