@@ -44,6 +44,11 @@ class DataGenerator(tf.keras.utils.Sequence):
         for i, ID in enumerate(temp_listIDs):
             # Load data
             tempX = read_h5_file(os.path.join(self.dataDir, '{}.h5'.format(ID)))
+            if tempX.shape[3] != 1:
+                print("{} does not have channel at end".format(ID))
+                a = list(tempX.shape)
+                a.remove(1)
+                tempX = tempX.reshape(a[0], a[1], a[2], 1)
             tempy = read_txt_file(os.path.join(self.dataDir, '{}.txt'.format(ID)))
             
             # Preprocessing
