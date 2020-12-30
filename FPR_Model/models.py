@@ -3,28 +3,13 @@ from tensorflow import keras
 from tensorflow.keras import layers
 from tensorflow.keras.applications.vgg16 import VGG16
 from tensorflow.keras.applications.inception_v3 import InceptionV3
-
-def tempVGG16(sideLength):
-    '''
-    VGG16 3D CNN model
-    with transfer learning -- however, not sure if this will work as vgg16 is originally
-    for 2D images
-    '''
-    input = keras.Input(shape=(sideLength, sideLength, sideLength, 1))
-    VGG16_model = VGG16(input_tensor=input, weights='imagenet')
-    x = VGG16_model.output
-    x = layers.GlobalAveragePooling2D()(x)
-    x = layers.Dense(1024, activation='relu')(x)
-    predictions = layers.Dense(200, activation='softmax')(x)
-
-    model = keras.Model(inputs=input, outputs=predictions, name='TEMPvgg16')
-    return model
     
 def VGG16(sideLength):
     '''
     VGG16 3D CNN Implementation
     '''
     #try decreasing strides
+    #compare with and without batch norm 
     
     input = keras.Input(shape=(sideLength, sideLength, sideLength, 1))
     
