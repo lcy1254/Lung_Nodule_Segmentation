@@ -133,7 +133,7 @@ def resNet(sideLength):
     for i in range(3): x = residual_block(x, 512, 2048, i)
     
     #at the end
-    x = layers.GlobalAveragePooling3D((2,2,2))(x)
+    x = layers.GlobalAveragePooling3D()(x)
     x = BatchNormalization()(x)
     x = Activation('relu')(x)
     x = Flatten()(x)
