@@ -87,7 +87,7 @@ class DataGenerator(tf.keras.utils.Sequence):
 
 class testDataGenerator(tf.keras.utils.Sequence):
     'Generates data for Keras'
-    def __init__(self, listIDs, dataDir, v_size, batch_size=32):
+    def __init__(self, listIDs, dataDir, v_size, batch_size=32, n_channels=1):
         #adjust v_size as necessary !!
         'Initialization'
         self.v_size = v_size
