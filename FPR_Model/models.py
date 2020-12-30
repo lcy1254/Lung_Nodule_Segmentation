@@ -122,16 +122,15 @@ def resNet(sideLength):
     '''resNet 3D implementation'''
     input = keras.Input(shape=(sideLength, sideLength, sideLength, 1))
     
-    x = layers.ZeroPadding3D(padding=(1,1,1))(input)
-    x = layers.Conv3D(filters=64, kernel_size=7, strides=2)(x)
+    x = layers.Conv3D(filters=64, kernel_size=7, strides=2, padding='same')(x)
     x = layers.BatchNormalization()(x)
     x = layers.Activation('relu')(x)
     x = layers.MaxPooling3D((3,3,3), strides=(2,2,2))(x)
     
-    for i in range(3): x = residual_block(x, 64, 256)
-    for i in range(4): x = residual_block(x, 128, 512)
-    for i in range(6): x = residual_block(x, 256, 1024)
-    for i in range(3): x = residual_block(x, 512, 2048)
+    for i in range(3): x = residual_block(x, 64, 256, i)
+    for i in range(4): x = residual_block(x, 128, 512, i)
+    for i in range(6): x = residual_block(x, 256, 1024, i)
+    for i in range(3): x = residual_block(x, 512, 2048, i)
     
     #at the end
     x = layers.GlobalAveragePooling3D((2,2,2))(x)
@@ -140,6 +139,7 @@ def resNet(sideLength):
     x = Flatten()(x)
     x = Dense(512, activation='relu')(x)
     x = Dropout(0.2)(x)
+    #try no dropout
     x = Dense(256, activation='relu')(x)
     x = Dropout(0.2)(x)
     output = Dense(1, activation='sigmoid')(x)
@@ -147,11 +147,15 @@ def resNet(sideLength):
     model = keras.Model(input, output, name='resnet')
     return model
 
-def residual_block(layer_in, f1N2, f3):
+def residual_block(layer_in, f1N2, f3, i):
     merge_input = layer_in
     # check if the number of filters needs to be increase, assumes channels last format
     if layer_in.shape[-1] != f3:
-        merge_input = layers.Conv3D(f3, (1,1,1), strides=(1,1,1), padding='same', activation='relu', kernel_initializer='he_normal')(layer_in)
+        if i!=0:
+            print('special first layer applied even though i is not 0!!!!!!!')
+        merge_input = layers.Conv3D(f3, (1,1,1), strides=(2,2,2), padding='same' kernel_initializer='he_normal')(layer_in)
+        merge_input = layers.BatchNormalization()(merge_input)
+        merge_input = layers.Activation('relu')(merge_input)
         
         #conv1
         conv1 = layers.Conv3D(f1N2, (1,1,1), strides=(2,2,2), padding='same', kernel_initializer='he_normal')(layer_in)
