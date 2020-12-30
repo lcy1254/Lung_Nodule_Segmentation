@@ -9,7 +9,7 @@ def VGG16(sideLength):
     VGG16 3D CNN Implementation
     '''
     #try decreasing strides
-    #compare with and without batch norm 
+    #compare with and without batch norm
     
     input = keras.Input(shape=(sideLength, sideLength, sideLength, 1))
     
@@ -85,7 +85,7 @@ def alexNet(sideLength):
     '''AlexNet 3D CNN Implementation'''
     input = keras.Input(shape=(sideLength, sideLength, sideLength, 1))
     
-    x = layers.Conv3D(filters=96, kernel_size=11, strides=4)(input)
+    x = layers.Conv3D(filters=96, kernel_size=11, strides=2)(input)
     x = layers.BatchNormalization()(x)
     x = layers.Activation('relu')(x)
     x = layers.MaxPooling3D((3,3,3), strides=(2,2,2))(x)
