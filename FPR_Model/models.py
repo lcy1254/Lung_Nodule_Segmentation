@@ -153,7 +153,7 @@ def residual_block(layer_in, f1N2, f3, i):
     if layer_in.shape[-1] != f3:
         if i!=0:
             print('special first layer applied even though i is not 0!!!!!!!')
-        merge_input = layers.Conv3D(f3, (1,1,1), strides=(2,2,2), padding='same' kernel_initializer='he_normal')(layer_in)
+        merge_input = layers.Conv3D(f3, (1,1,1), strides=(2,2,2), padding='same', kernel_initializer='he_normal')(layer_in)
         merge_input = layers.BatchNormalization()(merge_input)
         merge_input = layers.Activation('relu')(merge_input)
         
