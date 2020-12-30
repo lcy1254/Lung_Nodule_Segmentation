@@ -32,5 +32,5 @@ with strategy.scope():
     prediction = model.evaluate(test_generator, verbose=1)
     
     savePath = '/data/lung_seg/FPR/VGG16/logs/fit/20201229-021400'
-    with open(os.path.join(savePath, 'prediction.txt'), 'w+') as f:
+    with open(os.path.join(savePath, 'prediction2.txt'), 'w+') as f:
         f.write(str(prediction))
