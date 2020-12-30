@@ -29,7 +29,7 @@ with strategy.scope():
     model = models.VGG16(sideLength)
     
     for epoch in epochs:
-        model.load_weights("/data/lung_seg/FPR/VGG16/logs/fit/20201229-021400/checkpoints/gpu3_{}.hd5f".format(str(epoch)))
+        model.load_weights("/data/lung_seg/FPR/VGG16/logs/fit/20201229-021400/checkpoints/gpu3_{}.hd5f".format(str(epoch).zfill(2)))
         model.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
         prediction = model.evaluate(test_generator, verbose=1)
         
