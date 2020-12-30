@@ -88,7 +88,7 @@ def alexNet(sideLength):
     x = layers.Conv3D(filters=96, kernel_size=11, strides=1)(input)
     x = layers.BatchNormalization()(x)
     x = layers.Activation('relu')(x)
-    x = layers.MaxPooling3D((3,3,3), strides=(2,2,2))(x)
+    x = layers.MaxPooling3D((3,3,3))(x)   #strides=(2,2,2)
     
     x = layers.Conv3D(256, 5, 1)(x)
     x = layers.BatchNormalization()(x)
