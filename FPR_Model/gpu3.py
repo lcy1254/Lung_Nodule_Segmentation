@@ -30,10 +30,10 @@ with strategy.scope():
     ##----------------------------- Parameters -----------------------------------##
     n_classes = 2
     sideLength = 48
-    batch_size = 16
+    batch_size = 64
     max_epochs = 50
     period_checkpoint = 1
-    class_weight = {0: 1.0, 1: 2.0} 
+    class_weight = {0: 0.6, 1: 3.4}
     current_file_name = os.path.basename(__file__)[:-3]
 
     ##------------------------------ Dataset -------------------------------------##
@@ -57,7 +57,7 @@ with strategy.scope():
 
     #Track accuracy and loss in real-time
     #if jupyter notebook:
-    log_dir = "/data/lung_seg/FPR/VGG16/logs/fit/" + datetime.datetime.now().strftime("%Y/%m/%d-%H:%M:%S")
+    log_dir = "/data/lung_seg/FPR/VGG16/second/" + datetime.datetime.now().strftime("%Y/%m/%d-%H:%M:%S")
     file_writer = tf.summary.create_file_writer(log_dir + "/metrics")
     file_writer.set_as_default()
 
