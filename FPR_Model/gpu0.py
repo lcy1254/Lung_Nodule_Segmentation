@@ -31,7 +31,7 @@ with strategy.scope():
     ##----------------------------- Parameters -----------------------------------##
     n_classes = 2
     sideLength = 48
-    batch_size = 128
+    batch_size = 256
     max_epochs = 200
     period_checkpoint = 10
     class_weight = {0: 0.6, 1: 3.4}
@@ -76,7 +76,7 @@ with strategy.scope():
 
     if mode_run == 'train':
         #Compile
-        lr_callback = ReduceLROnPlateau(monitor='loss', factor=0.1, patience=7, verbose=1, mode='min')
+        lr_callback = ReduceLROnPlateau(monitor='val_loss', factor=0.1, patience=7, verbose=1, mode='min')
         '''
         def scheduler(epoch, lr):
             learning_rate = 0.001
