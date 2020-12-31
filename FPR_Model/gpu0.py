@@ -9,7 +9,7 @@ import re
 from tensorflow import keras
 import datetime
 from tensorflow.keras.callbacks import TensorBoard
-from keras.optimizers import Adam
+from tensorflow.keras.optimizers import Adam
 from tensorflow.keras.callbacks import ModelCheckpoint
 from tensorflow.keras.callbacks import ReduceLROnPlateau
 from tensorflow.keras import backend as K
