@@ -35,8 +35,8 @@ class MetricsHistory(Callback):
         self.epochs += [epoch]
         self.losses += [logs.get('loss')]
         self.val_losses += [logs.get('val_loss')]
-        self.accs += [logs.get('acc')]
-        self.val_accs += [logs.get('val_acc')]
+        self.accs += [logs.get('accuracy')]
+        self.val_accs += [logs.get('val_accuracy')]
 
         # Save to file
         dictionary = {'epochs': self.epochs,
