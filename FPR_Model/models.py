@@ -98,11 +98,11 @@ def alexNet(sideLength):
     x = layers.Conv3D(384, 3, 1, padding='same')(x)
     x = layers.BatchNormalization()(x)
     x = layers.Activation('relu')(x)
-    
+    '''
     x = layers.Conv3D(384, 3, 1, padding='same')(x)
     x = layers.BatchNormalization()(x)
     x = layers.Activation('relu')(x)
-    
+    '''
     x = layers.Conv3D(256, 3, 1, padding='same')(x)
     x = layers.BatchNormalization()(x)
     x = layers.Activation('relu')(x)
