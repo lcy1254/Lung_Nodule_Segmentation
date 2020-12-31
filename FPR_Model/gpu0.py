@@ -9,8 +9,9 @@ import re
 from tensorflow import keras
 import datetime
 from tensorflow.keras.callbacks import TensorBoard
-
+from keras.optimizers import Adam
 from tensorflow.keras.callbacks import ModelCheckpoint
+from tensorflow.keras.callbacks import ReduceLROnPlateau
 from tensorflow.keras import backend as K
 
 import metricsHistory as mh
@@ -30,9 +31,9 @@ with strategy.scope():
     ##----------------------------- Parameters -----------------------------------##
     n_classes = 2
     sideLength = 48
-    batch_size = 16
-    max_epochs = 50
-    period_checkpoint = 1
+    batch_size = 128
+    max_epochs = 200
+    period_checkpoint = 10
     class_weight = {0: 0.6, 1: 3.4}
     current_file_name = os.path.basename(__file__)[:-3]
 
@@ -57,7 +58,7 @@ with strategy.scope():
 
     #Track accuracy and loss in real-time
     #if jupyter notebook:
-    log_dir = "/data/lung_seg/FPR/alexNet/logs/fit/" + datetime.datetime.now().strftime("%Y/%m/%d-%H:%M:%S")
+    log_dir = "/data/lung_seg/FPR/alexNet/logs/fit/" + datetime.datetime.now().strftime("%Y-%m-%d_%H:%M:%S")
     file_writer = tf.summary.create_file_writer(log_dir + "/metrics")
     file_writer.set_as_default()
 
@@ -75,6 +76,8 @@ with strategy.scope():
 
     if mode_run == 'train':
         #Compile
+        lr_callback = ReduceLROnPlateau(monitor='loss', factor=0.1, patience=7, verbose=1, mode='min')
+        '''
         def scheduler(epoch, lr):
             learning_rate = 0.001
             if epoch > 10:
@@ -87,9 +90,10 @@ with strategy.scope():
             return learning_rate
             
         lr_callback = tf.keras.callbacks.LearningRateScheduler(scheduler)
+        '''
         tensorboard = TensorBoard(log_dir = log_dir, histogram_freq = 1)
         
-        model.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
+        model.compile(optimizer=Adam(lr=0.001), loss='binary_crossentropy', metrics=['accuracy'])
         
         model.fit_generator(generator=training_generator, epochs=max_epochs, verbose=1, validation_data=validation_generator, callbacks=[history, checkpoints, lr_callback, tensorboard], class_weight=class_weight)
 
