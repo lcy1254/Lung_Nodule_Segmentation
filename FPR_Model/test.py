@@ -34,6 +34,6 @@ with strategy.scope():
         prediction = model.evaluate(test_generator, verbose=1)
         
         savePath = '/data/lung_seg/FPR/resNet/2020-12-30_22:36:13/evaluation'
-        if not os.isdir(savePath): os.mkdir(savePath)
+        if not os.path.isdir(savePath): os.mkdir(savePath)
         with open(os.path.join(savePath, 'prediction_epoch{}.txt'.format(epoch)), 'w+') as f:
             f.write(str(prediction))
