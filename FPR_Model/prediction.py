@@ -48,4 +48,3 @@ for epoch in epochs:
     if not os.path.isdir(savePath): os.mkdir(savePath)
     f = csv.writer(open(os.path.join(savePath, 'prediction_epoch{}.csv'.format(epoch)), 'w+'))
     f.writerow(prediction)
-    f.close() 
