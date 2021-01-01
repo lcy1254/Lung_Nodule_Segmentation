@@ -140,6 +140,7 @@ class testDataGenerator(tf.keras.utils.Sequence):
         
         #Find list of IDs
         temp_listIDs = [self.listIDs[i] for i in indexes]
+        print(temp_listIDs)
         
         #Generate data
         X, y = self.__data_generation(temp_listIDs)
