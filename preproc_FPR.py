@@ -125,10 +125,10 @@ for predIter in os.listdir(predDir):
                         maxIntersect = max(temp)
                         index = intersects[temp.index(maxIntersect)][1]
                         temp_gt_label_vol = (gtLabeledVol == index)
-                        if maxIntersect < 0.15*np.sum(temp_gt_label_vol):
+                        if 2*maxIntersect/(np.sum(temp_gt_label_vol) + np.sum(prednoduleVol)) < 0.15:
                             saveNodule(prednoduleVol, img_vol, 0, testingSet, validationSet, outDir, total_nod_count)
                             total_nod_count += 1
-                        elif (predIter in tpPredIters) and (maxIntersect >= 0.3*np.sum(temp_gt_label_vol)):
+                        elif (predIter in tpPredIters) and (2*maxIntersect/(np.sum(temp_gt_label_vol) + np.sum(prednoduleVol)) >= 0.3):
                             saveNodule(prednoduleVol, img_vol, 1, testingSet, validationSet, outDir, total_nod_count)
                             total_nod_count += 1
                             '''x,y,z = np.nonzero(prednoduleVol)
