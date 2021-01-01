@@ -46,5 +46,6 @@ for epoch in epochs:
     
     savePath = '/data/lung_seg/FPR/VGG16/second/2020/12/31-15:56:09/predictions'
     if not os.path.isdir(savePath): os.mkdir(savePath)
-    with csv.writer(open(os.path.join(savePath, 'prediction_epoch{}.csv'.format(epoch)), 'w+')) as f:
-        f.writerow(prediction)
+    f = csv.writer(open(os.path.join(savePath, 'prediction_epoch{}.csv'.format(epoch)), 'w+'))
+    f.writerow(prediction)
+    f.close() 
