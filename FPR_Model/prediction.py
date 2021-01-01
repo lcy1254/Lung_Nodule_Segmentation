@@ -24,7 +24,7 @@ tf.config.experimental.set_memory_growth(gpus[0], True)
 testDir = '/data/lung_seg/FPR/nodule_files/testing'
 testinglistIDs = [int(re.findall(r'[0-9]+', file)[0]) for file in os.listdir(testDir) if '.h5' in file]
 
-print('whole testing list IDs: ' + testinglistIDs)
+print('whole testing list IDs: ' + str(testinglistIDs))
 
 epochs = [i for i in range(1, 51)]
 #CHANGE EPOCHS FOR 200 EPOCH RUNS
