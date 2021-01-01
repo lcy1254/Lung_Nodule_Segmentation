@@ -5,6 +5,8 @@ from volume import testDataGenerator
 import re
 import os
 import math
+import csv
+
 '''
 gpus = tf.config.experimental.list_physical_devices('GPU')
 tf.config.experimental.set_memory_growth(gpus[0], True)
@@ -44,6 +46,5 @@ for epoch in epochs:
     
     savePath = '/data/lung_seg/FPR/VGG16/second/2020/12/31-15:56:09/predictions'
     if not os.path.isdir(savePath): os.mkdir(savePath)
-    with open(os.path.join(savePath, 'prediction_epoch{}.txt'.format(epoch)), 'w+') as f:
-        f.write(str(prediction))
-
+    with csv.writer(open(os.path.join(savePath, 'prediction_epoch{}.csv'.format(epoch)), 'w+')) as f:
+        f.writerow(prediction)
