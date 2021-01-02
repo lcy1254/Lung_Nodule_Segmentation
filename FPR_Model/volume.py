@@ -53,7 +53,7 @@ class DataGenerator(tf.keras.utils.Sequence):
             
             # Preprocessing
             tempX = normalize(tempX)
-
+'''
             aug['rotate'] = random.choice(choices)
             aug['shift'] = random.choice(choices)
             aug['flip'] = random.choice(choices)
@@ -62,7 +62,7 @@ class DataGenerator(tf.keras.utils.Sequence):
             if aug['rotate'] == True: tempX = rotate(tempX)
             if aug['shift'] == True: tempX = shift(tempX)
             if aug['flip'] == True: tempX = flip(tempX)
-
+'''
             #resize to 50*50*50 with zero padding after augmentation
             tempX = resize_volume(tempX, self.v_size)
             
