@@ -16,7 +16,8 @@ with strategy.scope():
 testDir = '/data/lung_seg/FPR/nodule_files/testing'
 testinglistIDs = [int(re.findall(r'[0-9]+', file)[0]) for file in os.listdir(testDir) if '.h5' in file]
 
-epochs = [i for i in range(1, 19)]
+#epochs = [i for i in range(1, 19)]
+epochs = [7]
 
 a = len(testinglistIDs)
 print('total of {} testing images'.format(a))
@@ -29,11 +30,11 @@ test_generator = testDataGenerator(testinglistIDs, testDir, batch_size=batch_siz
 model = models.VGG16(sideLength)
 
 for epoch in epochs:
-    model.load_weights("/data/lung_seg/FPR/no_aug/2021-01-01_18:44:52/checkpoints/no_aug_{}.hd5f".format(str(epoch).zfill(2)))
+    model.load_weights("/data/lung_seg/FPR/resNet/second/2021-01-01_22:33:17/checkpoints/gpu1_second_{}.hd5f".format(str(epoch).zfill(2)))
     model.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
     prediction = model.evaluate(test_generator, verbose=1)
     
-    savePath = '/data/lung_seg/FPR/no_aug/2021-01-01_18:44:52/evaluation'
+    savePath = '/data/lung_seg/FPR/resNet/second/2021-01-01_22:33:17/evaluation'
     if not os.path.isdir(savePath): os.mkdir(savePath)
     with open(os.path.join(savePath, 'prediction_epoch{}.txt'.format(epoch)), 'w+') as f:
         f.write(str(prediction))
