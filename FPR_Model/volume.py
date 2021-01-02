@@ -201,18 +201,23 @@ def rotate(volume):
     vol = np.copy(volume)
     # define some rotation angles
     angles = [-20, -10, -5, 5, 10, 20]
+    axis = [(1,0), (0,1), (1,2), (2,1), (2,0), (0,2)]
     # pick angles at random
     angle = random.choice(angles)
+    axes = random.choice(axis)
     # rotate volume
-    vol = ndimage.rotate(vol, angle, reshape=False)
+    vol = ndimage.rotate(vol, angle, axes, reshape=False)
     return vol
 
 def shift(volume):
     '''shift image'''
     vol = np.copy(volume)
     #define some shift values
-    shifts = [-15, -10, -5, 5, 10, 15]    #edit these values later
-    shift = random.choice(shifts)
+    shift = []
+    shifts = [-5, -3, 0, 3, 5]
+    shift.append(random.choice(shifts))
+    shift.append(random.choice(shifts))
+    shift.append(random.choice(shifts))
     vol = ndimage.shift(vol, shift)
     return vol
     
