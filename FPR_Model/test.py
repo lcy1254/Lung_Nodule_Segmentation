@@ -27,7 +27,7 @@ batch_size = 64
 sideLength = 48
 
 test_generator = testDataGenerator(testinglistIDs, testDir, batch_size=batch_size, v_size=sideLength)
-model = models.VGG16(sideLength)
+model = models.resNet(sideLength)
 
 for epoch in epochs:
     model.load_weights("/data/lung_seg/FPR/resNet/second/2021-01-01_22:33:17/checkpoints/gpu1_second_{}.hd5f".format(str(epoch).zfill(2)))
