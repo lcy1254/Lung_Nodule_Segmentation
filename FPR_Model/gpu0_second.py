@@ -77,6 +77,7 @@ with strategy.scope():
 
     if mode_run == 'train':
         #Compile
+        '''
         lr_callback = ReduceLROnPlateau(monitor='val_loss', factor=0.1, patience=7, verbose=1, mode='min')
         '''
         def scheduler(epoch, lr):
@@ -91,7 +92,6 @@ with strategy.scope():
             return learning_rate
             
         lr_callback = tf.keras.callbacks.LearningRateScheduler(scheduler)
-        '''
         tensorboard = TensorBoard(log_dir = log_dir, histogram_freq = 1)
         
         model.compile(optimizer=Adam(lr=0.001), loss='binary_crossentropy', metrics=['accuracy'])
