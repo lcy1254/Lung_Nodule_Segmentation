@@ -9,7 +9,7 @@ import re
 from tensorflow import keras
 import datetime
 from tensorflow.keras.callbacks import TensorBoard
-from tensorflow.keras.optimizers import Adam
+#from tensorflow.keras.optimizers import Adam
 from tensorflow.keras.callbacks import ModelCheckpoint
 from tensorflow.keras.callbacks import ReduceLROnPlateau
 from tensorflow.keras import backend as K
@@ -100,7 +100,7 @@ if mode_run == 'train':
     lr_callback = tf.keras.callbacks.LearningRateScheduler(scheduler)
     tensorboard = TensorBoard(log_dir = log_dir, histogram_freq = 1)
     
-    model.compile(optimizer=Adam, loss='binary_crossentropy', metrics=['accuracy'])
+    model.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
     
     model.fit_generator(generator=training_generator, epochs=max_epochs, verbose=1, validation_data=validation_generator, callbacks=[history, checkpoints, lr_callback, tensorboard], class_weight=class_weight)
 
