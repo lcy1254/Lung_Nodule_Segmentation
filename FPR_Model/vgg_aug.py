@@ -27,9 +27,9 @@ with strategy.scope():
 #tf.config.experimental.set_visible_devices(gpus[0], 'GPU')
 
 gpus = tf.config.experimental.list_physical_devices('GPU')
-tf.config.experimental.set_visible_devices(gpus[1], 'GPU')
+tf.config.experimental.set_visible_devices(gpus[:3], 'GPU')
+tf.config.experimental.set_memory_growth(gpus[0], True)
 tf.config.experimental.set_memory_growth(gpus[1], True)
-tf.config.experimental.set_visible_devices(gpus[2], 'GPU')
 tf.config.experimental.set_memory_growth(gpus[2], True)
 
 mode_run = 'train' #train or test
