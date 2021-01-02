@@ -78,9 +78,9 @@ with strategy.scope():
         #Compile
         def scheduler(epoch, lr):
             learning_rate = 0.001
-            if epoch > 10:
+            if epoch > 1:
                 learning_rate = 0.0001
-            if epoch > 15:
+            if epoch > 20:
                 learning_rate = 0.00001
             if epoch > 30:
                 learning_rate = 0.000005
@@ -89,7 +89,7 @@ with strategy.scope():
             
         lr_callback = tf.keras.callbacks.LearningRateScheduler(scheduler)
         tensorboard = TensorBoard(log_dir = log_dir, histogram_freq = 1)
-        
+        model.load_weights('/data/lung_seg/FPR/no_aug/2021-01-01_18:44:52/checkpoints/no_aug_24.hd5f')
         model.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
         
         model.fit_generator(generator=training_generator, epochs=max_epochs, verbose=1, validation_data=validation_generator, callbacks=[history, checkpoints, lr_callback, tensorboard], class_weight=class_weight)
