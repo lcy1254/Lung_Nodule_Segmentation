@@ -214,10 +214,11 @@ def shift(volume):
     vol = np.copy(volume)
     #define some shift values
     shift = []
-    shifts = [-5, -3, 0, 3, 5]
+    shifts = [-3, -2, -1, 0, 1, 2, 3]
     shift.append(random.choice(shifts))
     shift.append(random.choice(shifts))
     shift.append(random.choice(shifts))
+    shift.append(0)
     vol = ndimage.shift(vol, shift)
     return vol
     
