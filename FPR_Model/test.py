@@ -16,9 +16,8 @@ with strategy.scope():
 testDir = '/data/lung_seg/FPR/nodule_files/testing'
 testinglistIDs = [int(re.findall(r'[0-9]+', file)[0]) for file in os.listdir(testDir) if '.h5' in file]
 
-#epochs = [i for i in range(1, 51)]
+epochs = [i for i in range(1, 19)]
 
-epochs = [16]
 a = len(testinglistIDs)
 print('total of {} testing images'.format(a))
 step = math.ceil(a/16)
