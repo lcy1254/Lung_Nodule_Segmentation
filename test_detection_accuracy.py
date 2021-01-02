@@ -91,7 +91,7 @@ for predIter in os.listdir(predDir):
         print(finalDiceTP)
         print(img_count)
         
-        outDir = os.path.join(predDir, predIter, 'eval')
+        outDir = os.path.join(predDir, predIter, 'final_eval')
         if not os.path.isdir(outDir):
             os.mkdir(outDir)
         
