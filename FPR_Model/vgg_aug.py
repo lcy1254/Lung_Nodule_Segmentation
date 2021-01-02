@@ -14,24 +14,24 @@ from tensorflow.keras.callbacks import ModelCheckpoint
 from tensorflow.keras import backend as K
 
 import metricsHistory as mh
-'''
+
 gpus = tf.config.experimental.list_physical_devices('GPU')
 tf.config.experimental.set_memory_growth(gpus[0], True)
 tf.config.experimental.set_memory_growth(gpus[1], True)
 tf.config.experimental.set_memory_growth(gpus[2], True)
 tf.config.experimental.set_memory_growth(gpus[3], True)
-
+'''
 strategy = tf.distribute.MirroredStrategy()
 with strategy.scope():
 '''
 #tf.config.experimental.set_visible_devices(gpus[0], 'GPU')
-
+'''
 gpus = tf.config.experimental.list_physical_devices('GPU')
 tf.config.experimental.set_visible_devices(gpus[:3], 'GPU')
 tf.config.experimental.set_memory_growth(gpus[0], True)
 tf.config.experimental.set_memory_growth(gpus[1], True)
 tf.config.experimental.set_memory_growth(gpus[2], True)
-
+'''
 strategy = tf.distribute.MirroredStrategy()
 with strategy.scope():
     mode_run = 'train' #train or test
@@ -39,7 +39,7 @@ with strategy.scope():
     ##----------------------------- Parameters -----------------------------------##
     n_classes = 2
     sideLength = 48
-    batch_size = 32
+    batch_size = 64
     #CHANGE BATCH SIZE WHEN USING MULTIPLE GPUS
     max_epochs = 50
     period_checkpoint = 1
@@ -67,7 +67,7 @@ with strategy.scope():
 
     #Track accuracy and loss in real-time
     #if jupyter notebook:
-    log_dir = "/data/lung_seg/FPR/VGG16/aug/" + datetime.datetime.now().strftime("%Y-%m-%d_%H:%M:%S")
+    log_dir = "/data/lung_seg/FPR/VGG16/aug2/" + datetime.datetime.now().strftime("%Y-%m-%d_%H:%M:%S")
     file_writer = tf.summary.create_file_writer(log_dir + "/metrics")
     file_writer.set_as_default()
 
@@ -87,11 +87,11 @@ with strategy.scope():
         #Compile
         def scheduler(epoch, lr):
             learning_rate = 0.001
-            if epoch > 10:
+            if epoch > 5:
                 learning_rate = 0.0001
-            if epoch > 15:
+            if epoch > 20:
                 learning_rate = 0.00001
-            if epoch > 30:
+            if epoch > 35:
                 learning_rate = 0.000005
             tf.summary.scalar('learning rate', data=learning_rate, step=epoch)
             return learning_rate
