@@ -79,7 +79,7 @@ with strategy.scope():
     history = mh.MetricsHistory(saving_path=os.path.join(saving_path, current_file_name+'.csv'))
 
     #Checkpoints
-    checkpoints = ModelCheckpoint(log_dir + '/checkpoints/' + current_file_name + '_{epoch:02d}' + '.hd5f', save_weights_only=True, period=period_checkpoint)
+    checkpoints = ModelCheckpoint(log_dir + '/checkpoints/' + current_file_name + '_{epoch:02d}' + '.hd5f', period=period_checkpoint)
 
     if mode_run == 'train':
         #Compile
