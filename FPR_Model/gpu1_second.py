@@ -31,11 +31,12 @@ n_classes = 2
 sideLength = 48
 batch_size = 64
 #CHANGE BATCH SIZE WHEN USING MULTIPLE GPUS
-max_epochs = 50
+max_epochs = 25
 period_checkpoint = 1
 class_weight = {0: 0.6, 1: 3.4}
 current_file_name = os.path.basename(__file__)[:-3]
 # NO AUGMENTATION !!!!!
+#trained two times 25 epoch then 25 epoch again
 
 ##------------------------------ Dataset -------------------------------------##
 #Load list of IDs
@@ -89,7 +90,7 @@ if mode_run == 'train':
         
     lr_callback = tf.keras.callbacks.LearningRateScheduler(scheduler)
     tensorboard = TensorBoard(log_dir = log_dir, histogram_freq = 1)
-    
+    model.load_weights('/data/lung_seg/FPR/resNet/second/2021-01-01_22:33:17/checkpoints/gpu1_second_25.hd5f')
     model.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
     
     model.fit_generator(generator=training_generator, epochs=max_epochs, verbose=1, validation_data=validation_generator, callbacks=[history, checkpoints, lr_callback, tensorboard], class_weight=class_weight)
