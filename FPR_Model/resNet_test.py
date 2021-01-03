@@ -35,11 +35,11 @@ with strategy.scope():
     model = models.resNet(sideLength)    #CHANGE THIS
 
     for epoch in epochs:
-        model.load_weights("/data/lung_seg/FPR/resNet/second/2021-01-01_22:33:17/checkpoints/gpu1_second_{}.hd5f".format(str(epoch).zfill(2)))   #CHANGE THIS
+        model.load_weights("/data/lung_seg/FPR/resNet/second/2021-01-02_18:10:46/checkpoints/gpu1_second_{}.hd5f".format(str(epoch).zfill(2)))   #CHANGE THIS
         model.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
         prediction = model.evaluate(test_generator, verbose=1)
         
-        savePath = '/data/lung_seg/FPR/resNet/second/2021-01-01_22:33:17/evaluation'    #CHANGE THIS
+        savePath = '/data/lung_seg/FPR/resNet/second/2021-01-02_18:10:46/evaluation'    #CHANGE THIS
         if not os.path.isdir(savePath): os.mkdir(savePath)
         with open(os.path.join(savePath, 'prediction_epoch{}.txt'.format(epoch)), 'w+') as f:
             f.write(str(prediction))
