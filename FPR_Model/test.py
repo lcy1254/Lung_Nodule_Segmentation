@@ -28,18 +28,18 @@ with strategy.scope():
     print('total of {} testing images'.format(a))
     step = math.ceil(a/16)
 
-    batch_size = 128    #CHANGE THIS 
+    batch_size = 128    #CHANGE THIS
     sideLength = 48
 
     test_generator = testDataGenerator(testinglistIDs, testDir, batch_size=batch_size, v_size=sideLength)
-    model = models.alexNet(sideLength)    #CHANGE THIS
+    model = models.resNet(sideLength)    #CHANGE THIS
 
     for epoch in epochs:
-        model.load_weights("/data/lung_seg/FPR/alexNet/second/2021-01-01_22:09:09/checkpoints/gpu0_second_{}.hd5f".format(str(epoch).zfill(2)))   #CHANGE THIS
+        model.load_weights("/data/lung_seg/FPR/resNet/aug/2021-01-02_01:43:22/checkpoints/res_aug_{}.hd5f".format(str(epoch).zfill(2)))   #CHANGE THIS
         model.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
         prediction = model.evaluate(test_generator, verbose=1)
         
-        savePath = '/data/lung_seg/FPR/resNet/second/2021-01-01_22:33:17/evaluation'    #CHANGE THIS
+        savePath = '/data/lung_seg/FPR/resNet/aug/2021-01-02_01:43:22/evaluation'    #CHANGE THIS
         if not os.path.isdir(savePath): os.mkdir(savePath)
         with open(os.path.join(savePath, 'prediction_epoch{}.txt'.format(epoch)), 'w+') as f:
             f.write(str(prediction))
