@@ -99,6 +99,6 @@ with strategy.scope():
         tensorboard = TensorBoard(log_dir = log_dir, histogram_freq = 1)
         model.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
         
-        model.fit_generator(generator=training_generator, epochs=max_epochs, verbose=1, validation_data=validation_generator, callbacks=[history, checkpoints, lr_callback, tensorboard, saveModels], class_weight=class_weight)
+        model.fit_generator(generator=training_generator, epochs=max_epochs, verbose=1, validation_data=validation_generator, callbacks=[history, checkpoints, lr_callback, tensorboard], class_weight=class_weight)
 
-
+#, saveModels
