@@ -79,7 +79,8 @@ with strategy.scope():
     history = mh.MetricsHistory(saving_path=os.path.join(saving_path, current_file_name+'.csv'))
 
     #Checkpoints
-    checkpoints = ModelCheckpoint(log_dir + '/checkpoints/' + current_file_name + '_{epoch:02d}' + '.hd5f', period=period_checkpoint)
+    checkpoints = ModelCheckpoint(log_dir + '/checkpoints/' + current_file_name + '_{epoch:02d}' + '.hd5f', save_weights_only=True, period=period_checkpoint)
+    saveModels = ModelCheckpoint(log_dir + '/savedmods/' + current_file_name + '_{epoch:02d}' + '.hd5f', period=period_checkpoint)
 
     if mode_run == 'train':
         #Compile
@@ -98,6 +99,6 @@ with strategy.scope():
         tensorboard = TensorBoard(log_dir = log_dir, histogram_freq = 1)
         model.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
         
-        model.fit_generator(generator=training_generator, epochs=max_epochs, verbose=1, validation_data=validation_generator, callbacks=[history, checkpoints, lr_callback, tensorboard], class_weight=class_weight)
+        model.fit_generator(generator=training_generator, epochs=max_epochs, verbose=1, validation_data=validation_generator, callbacks=[history, checkpoints, lr_callback, tensorboard, saveModels], class_weight=class_weight)
 
 
