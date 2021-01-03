@@ -32,7 +32,7 @@ with strategy.scope():
     sideLength = 48
     batch_size = 64
     #CHANGE BATCH SIZE WHEN USING MULTIPLE GPUS
-    max_epochs = 50
+    max_epochs = 25
     period_checkpoint = 1
     class_weight = {0: 0.6, 1: 3.4}
     current_file_name = os.path.basename(__file__)[:-3]
