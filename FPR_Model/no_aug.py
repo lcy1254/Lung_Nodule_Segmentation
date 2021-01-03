@@ -36,6 +36,7 @@ with strategy.scope():
     period_checkpoint = 1
     class_weight = {0: 0.6, 1: 3.4}
     current_file_name = os.path.basename(__file__)[:-3]
+    #trained 2 times 25 epoch then another 25 epoch after loading weights
 
     ##------------------------------ Dataset -------------------------------------##
     #Load list of IDs
