@@ -80,7 +80,7 @@ with strategy.scope():
 
     #Checkpoints
     checkpoints = ModelCheckpoint(log_dir + '/checkpoints/' + current_file_name + '_{epoch:02d}' + '.hd5f', save_weights_only=True, period=period_checkpoint)
-    saveModels = ModelCheckpoint(log_dir + '/savedmods/' + current_file_name + '_{epoch:02d}' + '.hd5f', period=period_checkpoint)
+    #saveModels = ModelCheckpoint(log_dir + '/savedmods/' + current_file_name + '_{epoch:02d}' + '.hd5f', period=period_checkpoint)
 
     if mode_run == 'train':
         #Compile
