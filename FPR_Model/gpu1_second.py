@@ -52,9 +52,9 @@ with strategy.scope():
     traininglistIDs = [re.findall(r'[0-9]+', file)[0] for file in os.listdir(trainingdataDir) if '.h5' in file]
     validationlistIDs = [re.findall(r'[0-9]+', file)[0] for file in os.listdir(validationdataDir) if '.h5' in file]
 
-    training_generator = volume.DataGenerator(traininglistIDs, trainingdataDir, v_size=sideLength, batch_size=batch_size, n_channels=1, n_classes=n_classes, shuffle=True)
+    training_generator = no_aug_volume.DataGenerator(traininglistIDs, trainingdataDir, v_size=sideLength, batch_size=batch_size, n_channels=1, n_classes=n_classes, shuffle=True)
 
-    validation_generator = volume.DataGenerator(validationlistIDs, validationdataDir, v_size=sideLength, batch_size=batch_size, n_channels=1, n_classes=n_classes, shuffle=True)
+    validation_generator = no_aug_volume.DataGenerator(validationlistIDs, validationdataDir, v_size=sideLength, batch_size=batch_size, n_channels=1, n_classes=n_classes, shuffle=True)
 
     ##------------------------------ Model ---------------------------------------##
     #Create
