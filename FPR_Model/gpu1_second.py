@@ -3,7 +3,7 @@
 import numpy as np
 import os
 import models
-import volume
+import no_aug_volume
 import tensorflow as tf
 import re
 from tensorflow import keras
@@ -35,7 +35,7 @@ with strategy.scope():
     ##----------------------------- Parameters -----------------------------------##
     n_classes = 2
     sideLength = 48
-    batch_size = 64
+    batch_size = 128
     #CHANGE BATCH SIZE WHEN USING MULTIPLE GPUS
     max_epochs = 25
     period_checkpoint = 1
