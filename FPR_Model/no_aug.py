@@ -32,7 +32,7 @@ with strategy.scope():
     sideLength = 48
     batch_size = 64
     #CHANGE BATCH SIZE WHEN USING MULTIPLE GPUS
-    max_epochs = 25
+    max_epochs = 50
     period_checkpoint = 1
     class_weight = {0: 0.6, 1: 3.4}
     current_file_name = os.path.basename(__file__)[:-3]
@@ -74,13 +74,13 @@ with strategy.scope():
 
     #Checkpoints
     checkpoints = ModelCheckpoint(log_dir + '/checkpoints/' + current_file_name + '_{epoch:02d}' + '.hd5f', save_weights_only=True, period=period_checkpoint)
-    savedmodels = ModelCheckpoint(log_dir + '/savedmods/' + current_file_name + '_{epoch:02d}' + '.hd5f', period=period_checkpoint)
+    #savedmodels = ModelCheckpoint(log_dir + '/savedmods/' + current_file_name + '_{epoch:02d}' + '.hd5f', period=period_checkpoint)
 
     if mode_run == 'train':
         #Compile
         def scheduler(epoch, lr):
             learning_rate = 0.001
-            if epoch > 1:
+            if epoch > 5:
                 learning_rate = 0.0001
             if epoch > 20:
                 learning_rate = 0.00001
@@ -94,6 +94,6 @@ with strategy.scope():
         #model.load_weights('/data/lung_seg/FPR/no_aug/2021-01-01_18:44:52/checkpoints/no_aug_24.hd5f')
         model.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
         
-        model.fit_generator(generator=training_generator, epochs=max_epochs, verbose=1, validation_data=validation_generator, callbacks=[history, checkpoints, lr_callback, tensorboard, savedmodels], class_weight=class_weight)
+        model.fit_generator(generator=training_generator, epochs=max_epochs, verbose=1, validation_data=validation_generator, callbacks=[history, checkpoints, lr_callback, tensorboard], class_weight=class_weight)
 
 
