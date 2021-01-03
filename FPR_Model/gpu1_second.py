@@ -35,7 +35,7 @@ with strategy.scope():
     ##----------------------------- Parameters -----------------------------------##
     n_classes = 2
     sideLength = 48
-    batch_size = 128
+    batch_size = 64
     #CHANGE BATCH SIZE WHEN USING MULTIPLE GPUS
     max_epochs = 25
     period_checkpoint = 1
