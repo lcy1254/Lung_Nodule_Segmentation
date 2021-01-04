@@ -1,7 +1,8 @@
-import CTLungPreprocessing
+from CTLungPreprocessing import preprocess, segment_lung_mask, create_bounding_box, reshape_mask
 import pylidc as pl
 import numpy as np
 import pandas as pd
+from pylidc.utils import consensus
 
 #nods --> dictionary of objects
 
