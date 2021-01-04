@@ -26,10 +26,8 @@ validationSet = [] #list(np.arange(3,2000,10))
 assert os.path.isdir(gtDir)
 assert os.path.isdir(predDir)
 
-for key in outDir:
-    dirName = outDir[key]
-    if not os.path.isdir(dirName):
-        os.mkdir(dirName)
+if not os.path.isdir(outDir):
+    os.mkdir(outDir)
 
 vol_tag = 'volume'
 seg_tag = 'labels'
