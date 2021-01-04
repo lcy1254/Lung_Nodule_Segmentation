@@ -10,18 +10,20 @@ import detection_accuracy as da
 import re
 import pandas as pd
 import nodSize as ns
-import att
 
 #Usage: run_att.py
 
 gtDir = 'data/lung_seg/lung_nifti_files'
-predDir = 'data/lung_seg/inference'
+predDir = 'data/lung_seg/blaine/frozen/inference'
+outDir = 'data/lung_seg/temp'
 
 assert os.path.isdir(gtDir)
 assert os.path.isdir(predDir)
 
+iterList = ['iter_22501', 'iter_21051']
+
 for predIter in os.listdir(predDir):
-    if 'iter_' in predIter:
+    if 'iter_' in predIter and predIter in iterList:
         print(predIter) #temporary
         PID = []
         detectAcc = []
@@ -88,7 +90,7 @@ for predIter in os.listdir(predDir):
                     texture.append(nods[i].texture)
                     malignancy.append(nods[i].malignancy)
         
-        outDir = os.path.join(predDir, predIter, 'eval')
+        outDir = os.path.join(outDir, predIter)
         if not os.path.isdir(outDir):
             os.mkdir(outDir)
         
