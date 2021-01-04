@@ -5,6 +5,7 @@ from volume import testDataGenerator
 import re
 import os
 import math
+import alex_model
 '''
 gpus = tf.config.experimental.list_physical_devices('GPU')
 tf.config.experimental.set_visible_devices(gpus[2], 'GPU')
@@ -32,14 +33,14 @@ with strategy.scope():
     sideLength = 48
 
     test_generator = testDataGenerator(testinglistIDs, testDir, batch_size=batch_size, v_size=sideLength)
-    model = models.alexNet(sideLength)    #CHANGE THIS
+    model = alex_model.alexNet(sideLength)    #CHANGE THIS
 
     for epoch in epochs:
-        model.load_weights("/data/lung_seg/FPR/alexNet/aug/2021-01-02_01:55:28/checkpoints/alex_aug_{}.hd5f".format(str(epoch).zfill(2)))   #CHANGE THIS
+        model.load_weights("/data/lung_seg/FPR/alexNet/dump/2021-01-04_03:42:35/checkpoints/alex_finetuning_{}.hd5f".format(str(epoch).zfill(2)))   #CHANGE THIS
         model.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
         prediction = model.evaluate(test_generator, verbose=1)
         
-        savePath = '/data/lung_seg/FPR/alexNet/aug/2021-01-02_01:55:28/evaluation'    #CHANGE THIS
+        savePath = '/media/data_crypt_2/alexNet_finetuning/evaluation'    #CHANGE THIS
         if not os.path.isdir(savePath): os.mkdir(savePath)
         with open(os.path.join(savePath, 'prediction_epoch{}.txt'.format(epoch)), 'w+') as f:
             f.write(str(prediction))
