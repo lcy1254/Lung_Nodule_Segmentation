@@ -43,9 +43,9 @@ with strategy.scope():
     for epoch in epochs:
         model.load_weights("/data/lung_seg/FPR/alexNet/aug/2021-01-02_01:55:28/checkpoints/alex_aug_{}.hd5f".format(str(epoch).zfill(2)))
         model.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
-        prediction = model.predict(test_generator, verbose=1)
+        prediction = model.evaluate(test_generator, verbose=1)
         
-        savePath = '/media/data_crypt_2/alexNet/predictions-final'
+        savePath = '/media/data_crypt_2/alexNet/eval-final'
         if not os.path.isdir(savePath): os.mkdir(savePath)
-        f = csv.writer(open(os.path.join(savePath, 'prediction_epoch{}.csv'.format(epoch)), 'w+'))
+        f = csv.writer(open(os.path.join(savePath, 'evaluation_epoch{}.csv'.format(epoch)), 'w+'))
         f.writerow(prediction)
