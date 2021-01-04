@@ -12,7 +12,7 @@ from predmask2nod_utils import saveNodule
 #get falses from pred images
 
 gtDir = '/data/lung_seg/lung_nifti_files'
-predDir = '/data/lung_seg/tempfrozen_dataforfpr/inference'
+predDir = '/data/lung_seg/blaine/frozen/inference'
 outDir = '/media/data_crypt_2/temp'
 predIters = ['iter_22501'] #add more numbers
 '''
