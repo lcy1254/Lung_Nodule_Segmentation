@@ -1,6 +1,6 @@
 import numpy as np
 import tensorflow as tf
-import models
+import alex_model
 from volume import testDataGenerator
 import re
 import os
@@ -37,7 +37,7 @@ with strategy.scope():
     sideLength = 48
 
     test_generator = testDataGenerator(testinglistIDs, testDir, batch_size=batch_size, v_size=sideLength)
-    model = models.alexNet(sideLength)
+    model = alex_model.alexNet(sideLength)
 
     for epoch in epochs:
         model.load_weights("/data/lung_seg/FPR/alexNet/dump/2021-01-04_03:42:35/checkpoints/alex_finetuning_{}.hd5f".format(str(epoch).zfill(2)))
