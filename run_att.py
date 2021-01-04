@@ -13,9 +13,9 @@ import nodSize as ns
 
 #Usage: run_att.py
 
-gtDir = 'data/lung_seg/lung_nifti_files'
-predDir = 'data/lung_seg/blaine/frozen/inference'
-outDir = 'data/lung_seg/temp'
+gtDir = '/data/lung_seg/lung_nifti_files'
+predDir = '/data/lung_seg/blaine/frozen/inference'
+outDir = '/data/lung_seg/temp'
 
 assert os.path.isdir(gtDir)
 assert os.path.isdir(predDir)
