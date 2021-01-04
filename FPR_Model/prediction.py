@@ -8,6 +8,12 @@ import math
 import csv
 
 
+'''
+gpus = tf.config.experimental.list_physical_devices('GPU')
+tf.config.experimental.set_visible_devices(gpus[0], 'GPU')
+tf.config.experimental.set_memory_growth(gpus[0], True)
+'''
+
 gpus = tf.config.experimental.list_physical_devices('GPU')
 tf.config.experimental.set_memory_growth(gpus[0], True)
 tf.config.experimental.set_memory_growth(gpus[1], True)
@@ -15,12 +21,6 @@ tf.config.experimental.set_memory_growth(gpus[2], True)
 tf.config.experimental.set_memory_growth(gpus[3], True)
 strategy = tf.distribute.MirroredStrategy()
 with strategy.scope():
-
-'''
-gpus = tf.config.experimental.list_physical_devices('GPU')
-tf.config.experimental.set_visible_devices(gpus[0], 'GPU')
-tf.config.experimental.set_memory_growth(gpus[0], True)
-'''
     testDir = '/data/lung_seg/FPR/nodule_files/testing'
     testinglistIDs = [int(re.findall(r'[0-9]+', file)[0]) for file in os.listdir(testDir) if '.h5' in file]
 
