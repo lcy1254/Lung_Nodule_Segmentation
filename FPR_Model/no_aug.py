@@ -59,7 +59,7 @@ with strategy.scope():
 
     #Track accuracy and loss in real-time
     #if jupyter notebook:
-    log_dir = "/data/lung_seg/FPR/no_aug/" + datetime.datetime.now().strftime("%Y-%m-%d_%H:%M:%S")
+    log_dir = "/media/data_crypt_2/no_aug/" + datetime.datetime.now().strftime("%Y-%m-%d_%H:%M:%S")
     file_writer = tf.summary.create_file_writer(log_dir + "/metrics")
     file_writer.set_as_default()
 
