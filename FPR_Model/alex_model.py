@@ -1,6 +1,10 @@
+import tensorflow as tf
+from tensorflow import keras
+from tensorflow.keras import layers
+
 def alexNet(sideLength):
     '''AlexNet 3D CNN Implementation'''
-    #reduced # of filters 
+    #reduced # of filters
     input = keras.Input(shape=(sideLength, sideLength, sideLength, 1))
     
     x = layers.Conv3D(filters=96, kernel_size=11, strides=3, padding='same')(input)
