@@ -5,7 +5,7 @@ import h5py
 def saveNodule(noduleLabel, img, label, testingSet, validationSet, outDir, total_nod_count):
     x,y,z = np.nonzero(noduleLabel)
     if (np.max(x)-np.min(x)+20)>48:
-        temp = ((np.max(x)+np.min(x))/2)
+        temp = int((np.max(x)+np.min(x))/2)
         x1 = temp-24
         x2 = temp+24
     else:
@@ -13,7 +13,7 @@ def saveNodule(noduleLabel, img, label, testingSet, validationSet, outDir, total
         x2 = np.max(x)+10
     
     if (np.max(y)-np.min(y)+20)>48:
-        temp = ((np.max(y)+np.min(y))/2)
+        temp = int((np.max(y)+np.min(y))/2)
         y1 = temp-24
         y2 = temp+24
     else:
@@ -21,7 +21,7 @@ def saveNodule(noduleLabel, img, label, testingSet, validationSet, outDir, total
         y2 = np.max(y)+10
         
     if (np.max(z)-np.min(z)+20)>48:
-        temp = ((np.max(z)+np.min(z))/2)
+        temp = int((np.max(z)+np.min(z))/2)
         z1 = temp-24
         z2 = temp+24
     else:
