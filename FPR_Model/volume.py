@@ -63,8 +63,11 @@ class DataGenerator(tf.keras.utils.Sequence):
             if aug['shift'] == True: tempX = shift(tempX)
             if aug['flip'] == True: tempX = flip(tempX)
             
-            #resize to 50*50*50 with zero padding after augmentation
-            tempX = resize_volume(tempX, self.v_size)
+            #resize to 48*48*48 with zero padding after augmentation
+            if tempX.shape[0] == 48 and tempX.shape[1] == 48 and tempX.shape[2] == 48 and tempX.shape[3] == 1:
+                pass
+            else:
+                tempX = resize_volume(tempX, self.v_size)
             
             # Store sample
             X[i,] = tempX
