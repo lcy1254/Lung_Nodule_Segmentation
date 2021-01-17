@@ -39,8 +39,8 @@ with strategy.scope():
 
     ##------------------------------ Dataset -------------------------------------##
     #Load list of IDs
-    trainingdataDir = '/data/lung_seg/FPR/nodule_files/training'
-    validationdataDir = '/data/lung_seg/FPR/nodule_files/validation'
+    trainingdataDir = '/media/data_crypt_2/FPR_data/training'
+    validationdataDir = '/media/data_crypt_2/FPR_data/validation'
 
     traininglistIDs = [re.findall(r'[0-9]+', file)[0] for file in os.listdir(trainingdataDir) if '.h5' in file]
     validationlistIDs = [re.findall(r'[0-9]+', file)[0] for file in os.listdir(validationdataDir) if '.h5' in file]
@@ -56,7 +56,7 @@ with strategy.scope():
 
     #Track accuracy and loss in real-time
     #if jupyter notebook:
-    log_dir = "/data/lung_seg/FPR/alexNet/aug/" + datetime.datetime.now().strftime("%Y-%m-%d_%H:%M:%S")
+    log_dir = "/media/data_crypt_2/FPR/nopadding-alexnetaug/" + datetime.datetime.now().strftime("%Y-%m-%d_%H:%M:%S")
     file_writer = tf.summary.create_file_writer(log_dir + "/metrics")
     file_writer.set_as_default()
 
