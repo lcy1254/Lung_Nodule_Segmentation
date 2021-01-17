@@ -40,11 +40,11 @@ with strategy.scope():
     model = models.VGG16(sideLength)
 
     for epoch in epochs:
-        model.load_weights("/data/lung_seg/FPR/VGG16/aug2/2021-01-04_03:41:48/checkpoints/vgg_aug_{}.hd5f".format(str(epoch).zfill(2)))
+        model.load_weights("/media/data_crypt_2/no_aug/2021-01-17_00:18:41/checkpoints/no_aug_{}.hd5f".format(str(epoch).zfill(2)))
         model.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
         prediction = model.evaluate(test_generator, verbose=1)
         
-        savePath = '/media/data_crypt_2/VGG/eval'
+        savePath = '/media/data_crypt_2/no_aug/2021-01-17_00:18:41/eval'
         if not os.path.isdir(savePath): os.mkdir(savePath)
-        f = csv.writer(open(os.path.join(savePath, 'prediction_epoch{}.csv'.format(epoch)), 'w+'))
+        f = csv.writer(open(os.path.join(savePath, 'eval_epoch{}.csv'.format(epoch)), 'w+'))
         f.writerow(prediction)
