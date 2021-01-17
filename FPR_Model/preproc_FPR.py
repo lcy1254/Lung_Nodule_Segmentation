@@ -6,7 +6,7 @@ from scipy.ndimage import label, generate_binary_structure
 import h5py
 import re
 import sys
-from FPR_Proproc_NoPadding_utils import saveNodule #FPRpreproc_utils or FPR_Preproc_biggerstretch_utils or FPR_Proproc_NoPadding_utils
+from FPR_Preproc_NoPadding_utils import saveNodule #FPRpreproc_utils or FPR_Preproc_biggerstretch_utils or FPR_Preproc_NoPadding_utils
 #change this ^^^
 
 #get trues from gt images
@@ -15,7 +15,7 @@ from FPR_Proproc_NoPadding_utils import saveNodule #FPRpreproc_utils or FPR_Prep
 gtDir = '/data/lung_seg/lung_nifti_files'
 predDir = '/media/data_crypt_2/FPR_datagen_inference/inference2'   #change this
 outDir = {'training': '/media/data_crypt_2/FPR_data/training', 'testing': '/media/data_crypt_2/FPR_data/testing', 'validation': '/media/data_crypt_2/FPR_data/validation'}
-#change this ^^^^ 
+#change this ^^^^
 predIters = ['iter_11101', 'iter_11851', 'iter_12051', 'iter_13301', 'iter_11051'] #add more numbers
 tpPredIters = ['iter_11101', 'iter_11051', 'iter_11851']
 validationSet = list(np.arange(3,2000,10)) + list(np.arange(7000, 10000, 10)) + list(np.arange(15000,18000,10))
