@@ -12,7 +12,7 @@ if len(sys.argv) == 3:
 else:
 	iter = 0
 log = open('{}'.format(fileDir))
-word = 'Loss_tr'
+word = 'Training loss:'
 loss = []
 for line in log:
 	if word in line:
