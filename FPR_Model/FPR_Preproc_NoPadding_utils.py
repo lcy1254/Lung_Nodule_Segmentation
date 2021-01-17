@@ -5,15 +5,15 @@ import h5py
 def saveNodule(noduleLabel, img, label, testingSet, validationSet, outDir, total_nod_count):
     x,y,z = np.nonzero(noduleLabel)
         
-    temp = ((np.max(x)+np.min(x))/2)
+    temp = int((np.max(x)+np.min(x))/2)
     x1 = temp-24
     x2 = temp+24
     
-    temp = ((np.max(y)+np.min(y))/2)
+    temp = int((np.max(y)+np.min(y))/2)
     y1 = temp-24
     y2 = temp+24
     
-    temp = ((np.max(z)+np.min(z))/2)
+    temp = int((np.max(z)+np.min(z))/2)
     z1 = temp-24
     z2 = temp+24
     
