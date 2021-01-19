@@ -13,7 +13,7 @@ from testingSet_utils import saveNodule
 
 gtDir = '/data/lung_seg/lung_nifti_files'
 predDir = '/data/lung_seg/blaine/frozen/inference'
-outDir = {'testing': '/data/lung_seg/FPR/nodule_files/testing'}
+outDir = {'testing': '/media/data_crypt_2/FPR_data_bigger/testing'}
 predIters = ['iter_11051', 'iter_29251', 'iter_18551', 'iter_26001', 'iter_27751', 'iter_24251'] #add more numbers
 
 assert os.path.isdir(gtDir)
