@@ -57,7 +57,7 @@ model.summary()
 #Track accuracy and loss in real-time
 #if jupyter notebook:
 log_dir = "//data/FPR/models/nopadding-alexnetaug/" + datetime.datetime.now().strftime("%Y-%m-%d_%H:%M:%S")
-file_writer = tf.summary.create_file_writer(log_dir + "/metrics")
+file_writer = tf.summary.FileWriter(log_dir + "/metrics")
 file_writer.set_as_default()
 
 #python script
