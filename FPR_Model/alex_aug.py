@@ -16,11 +16,9 @@ from tensorflow.keras import backend as K
 
 import metricsHistory as mh
 
-gpus = tf.compat.v1.config.experimental.list_physical_devices('GPU')
-print(gpus)
-dsfsd
-tf.config.experimental.set_memory_growth(gpus[0], True)
-tf.config.experimental.set_memory_growth(gpus[1], True)
+#gpus = tf.compat.v1.config.experimental.list_physical_devices('GPU')
+#tf.config.experimental.set_memory_growth(gpus[0], True)
+#tf.config.experimental.set_memory_growth(gpus[1], True)
 #tf.config.experimental.set_memory_growth(gpus[2], True)
 #tf.config.experimental.set_memory_growth(gpus[3], True)
 
