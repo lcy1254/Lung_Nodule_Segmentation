@@ -5,7 +5,7 @@ import math
 category = 'Diameter Axial Plane'        #CHOOSE CATEGORY (eg. Subtlety, Diameter Axial Plane, etc.)
 thresh = 10                              #CHOOSE THRESHOLD
 
-FilePath = '/Users/ChaeyoungLee/Downloads/inference/iter_22501/specialeval/Attributes copy.xlsx'
+FilePath = '/Users/ChaeyoungLee/Downloads/inference/iter_22501/specialeval/Attributes copy.xlsx'   #Enter file path to spreadsheet
 df = pd.read_excel(FilePath)
 
 size = df[['Detection Bool', category]]
