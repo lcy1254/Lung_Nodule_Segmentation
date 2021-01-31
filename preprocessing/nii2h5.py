@@ -1,44 +1,43 @@
 """
-!!!!! code from https://github.com/bbrister !!!!!
 https://github.com/bbrister/CTH_seg_private/blob/master/nii2h5.py
 
-        nii2h5.py
+nii2h5.py
 
-        DESCRIPTION
-                This script converts a Nifti (.nii.gz) dataset into h5 format,
-                separating the training and validation sets. This is used to
-                prepare a dataset for the CTH_seg deep neural network semantic
-                segmentation repository.
+DESCRIPTION
+        This script converts a Nifti (.nii.gz) dataset into h5 format,
+        separating the training and validation sets. This is used to
+        prepare a dataset for the CTH_seg deep neural network semantic
+        segmentation repository.
 
 
-                To use this script for an existisng dataset, simply call it
-                with one of the arguments below.
+        To use this script for an existisng dataset, simply call it
+        with one of the arguments below.
 
-                To add a new dataset:
-                        1. Make sure your data consists of pairs of Nifti files
-                                volume-XXX.nii.gz
-                                labels-XXX.nii.gz
-                        where XXX is a number identifying that data pair. The
-                        first file stores the image information, possibly in multiple 
-                        channels as a 4D image volume, while the second stores the
-                        3D class labels. Valid class labels are in the range 0-NUM_CLASS-1,
-                        while negative labels are ignored during training.
-                        2. Configure path_nii to be to the directory of the Nifti data
-                        3. Configure path_h5 to be the directory of the output training
-                        and validation data (see examples)
-                        4. Configure validationSet to be a list of the data 
-                        points which go in the validation data. These are the
-                        numbers XXX above.
-        USAGE
-                Call this script with the command.
-                        python nii2h5.py [mode]
-                where mode is one of the following datasets:
-                        organ
-                        pet-ct-lung
-                        liver_lesion
-                        baselines-1mm
-                        ct_lung
-         
+        To add a new dataset:
+                1. Make sure your data consists of pairs of Nifti files
+                        volume-XXX.nii.gz
+                        labels-XXX.nii.gz
+                where XXX is a number identifying that data pair. The
+                first file stores the image information, possibly in multiple
+                channels as a 4D image volume, while the second stores the
+                3D class labels. Valid class labels are in the range 0-NUM_CLASS-1,
+                while negative labels are ignored during training.
+                2. Configure path_nii to be to the directory of the Nifti data
+                3. Configure path_h5 to be the directory of the output training
+                and validation data (see examples)
+                4. Configure validationSet to be a list of the data
+                points which go in the validation data. These are the
+                numbers XXX above.
+USAGE
+        Call this script with the command.
+                python nii2h5.py [mode]
+        where mode is one of the following datasets:
+                organ
+                pet-ct-lung
+                liver_lesion
+                baselines-1mm
+                ct_lung
+     
 """
 import h5py
 import numpy as np
@@ -87,11 +86,10 @@ elif mode == 'baselines-1mm':
         validationSet = [] # Don't use these for validation
         tag = 'mint-baseline'
 elif mode == 'ct_lung': 
-        path_nii = '/data/lung_seg/lung_nifti_files'
-        path_h5 = {'training' : '/data/lung_seg/training_2',
-                   'validation': '/data/lung_seg/validation_2'}
-        validationSet = list(np.arange(1, 900, 3))
-        validationSet.extend(list(range(901, 1000)))
+        path_nii = '/data/improved_res_lung/improved_res_nifti_files'
+        path_h5 = {'training' : '/data/improved_lung_data/training',
+                   'validation': '/data/improved_lung_data/validation'}
+        validationSet = list(np.arange(1, 1000, 7))
 else:
         raise ValueError('Unrecognized mode: ' + mode)
 
