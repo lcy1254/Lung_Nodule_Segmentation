@@ -53,13 +53,13 @@ for predIter in os.listdir(predDir):
 
 print('TPR: ', str(TPR))
 print('FPR: ', str(FPR))
-
+'''
 with open('/data/lung_seg/TPvsFP.csv', mode='w+') as f:
     f_writer = csv.writer(f)
     f_writer.writerow(TPR)
     f_writer.writerow(FPR)
-
-file = open('/data/lung_seg/TPvsFP.txt', 'w+')
-file.write(str(TPR))
+'''
+file = open('/data/lung_seg/TPvsFP2.txt', 'w+')
+file.write(str(TPR) + '\n')
 file.write(str(FPR))
 file.close()
