@@ -11,6 +11,7 @@ FPR = []
 for predIter in os.listdir(predDir):
     if 'iter_' in predIter:
         try:
+            print(str(predIter) + 'try1')
             Fconf = open(os.path.join(predDir, predIter, 'eval', 'confusion.txt'), 'r')
             a = Fconf.read()
             b = re.findall(r'[0-9]+', a)
@@ -20,8 +21,9 @@ for predIter in os.listdir(predDir):
             TPR.append(tp)
             FPR.append(fp)
         except ValueError:
+            print('try2')
             Fconf.close()
-            Fconf = open(os.path.join(predDir, predIter, 'eval', 'confusion.txt'), 'r')
+            Fconf = open(os.path.join(predDir, predIter, 'eval', 'confusion_1.txt'), 'r')
             a = Fconf.readline().strip()
             a2 = Fconf.readline().strip()
             a = a.strip('[] ')
@@ -36,6 +38,7 @@ for predIter in os.listdir(predDir):
             TPR.append(tp)
             FPR.append(fp)
         except:
+            print('try3')
             Fconf.close()
             Fconf = open(os.path.join(predDir, predIter, 'eval', 'confusion_1.txt'), 'r')
             a = Fconf.read()
