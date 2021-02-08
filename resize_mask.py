@@ -2,7 +2,7 @@ import nibabel as nib
 import numpy as np
 import os
 import scipy.ndimage
-import re 
+import re
 
 #on jupiter
 
@@ -18,8 +18,8 @@ for predIter in os.listdir(predDir):
             label_file = nib.load(os.path.join(predDir, predIter, 'prediction', predFile))
             vol = np.array(label_file.dataobj).astype(np.int32)
             gt = nib.load(os.path.join(gtDir, 'labels-{}.nii.gz'.format(img_num)))
-            new_shape = tuple(gt.dataobj.shape[:3])
-            old_shape = tuple(vol.shape[:3])
+            new_shape = np.array(gt.dataobj.shape[:3])
+            old_shape = np.array(vol.shape[:3])
             resize_factor = new_shape/old_shape
             resized_image = scipy.ndimage.zoom(vol, resize_factor)
             img = nib.Nifti1Image(resized_image, None)
