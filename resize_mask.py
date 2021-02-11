@@ -11,9 +11,9 @@ outDir = '/data/lung_resized_inference'
 gtDir = '/data/improved_res_lung/improved_res_nifti_files'
 
 for predIter in os.listdir(predDir):
-    print(predIter)
-    alr = os.listdir(os.path.join(predDir, predIter, 'prediction'))
     if 'iter_' in predIter:
+        print(predIter)
+        alr = os.listdir(os.path.join(predDir, predIter, 'prediction'))
         for predFile in os.listdir(os.path.join(predDir, predIter, 'prediction')):
             if '.nii.gz' in predFile and predFile not in alr:
                 try:
