@@ -29,4 +29,5 @@ for predIter in os.listdir(predDir):
                     img = nib.Nifti1Image(resized_image, None)
                     nib.save(img, os.path.join(outDir,predIter,'prediction',predFile))
                 except:
+                    print('error!')
                     continue
