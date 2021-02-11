@@ -13,9 +13,9 @@ gtDir = '/data/improved_res_lung/improved_res_nifti_files'
 for predIter in os.listdir(predDir):
     if 'iter_' in predIter:
         print(predIter)
-        alr = os.listdir(os.path.join(predDir, predIter, 'prediction'))
+        alr = os.listdir(os.path.join(outDir, predIter, 'prediction'))
         for predFile in os.listdir(os.path.join(predDir, predIter, 'prediction')):
-            if '.nii.gz' in predFile and predFile not in alr:
+            if ('.nii.gz' in predFile) and (predFile not in alr):
                 try:
                     img_num = int(re.findall(r'[0-9]+', predFile)[0])
                     print(img_num)
