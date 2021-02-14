@@ -6,15 +6,15 @@ from scipy.ndimage import label, generate_binary_structure
 import h5py
 import re
 import sys
-from FPR_Preproc_NoPadding_utils import saveNodule #FPRpreproc_utils or FPR_Preproc_biggerstretch_utils or FPR_Preproc_NoPadding_utils
+from FPRpreproc_utils import saveNodule #FPRpreproc_utils or FPR_Preproc_biggerstretch_utils or FPR_Preproc_NoPadding_utils
 #change this ^^^
 
 #get trues from gt images
 #get falses from pred images
 
-gtDir = '/data/lung_seg/lung_nifti_files'
-predDir = '/media/data_crypt_2/FPR_datagen_inference/inference2'   #change this
-outDir = {'training': '/media/data_crypt_2/FPR_data/training', 'testing': '/media/data_crypt_2/FPR_data/testing', 'validation': '/media/data_crypt_2/FPR_data/validation'}
+gtDir = '/data/improved_lung_nifti_files/improved_res_nifti_files'
+predDir = '/data/lung_resized_inference/lung_resized_inference'   #change this
+outDir = {'training': '/data/resized_FPR/training', 'testing': '/data/resized_FPR/testing', 'validation': '/data/resized_FPR/validation'}
 #change this ^^^^
 predIters = ['iter_11101', 'iter_11851', 'iter_12051', 'iter_13301', 'iter_11051'] #add more numbers
 tpPredIters = ['iter_11101', 'iter_11051', 'iter_11851']
