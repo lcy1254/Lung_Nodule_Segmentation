@@ -29,7 +29,8 @@ testinglistIDs = [int(re.findall(r'[0-9]+', file)[0]) for file in os.listdir(tes
 
 print('whole testing list IDs: ' + str(testinglistIDs))
 
-epochs = [i for i in range(1, 51)]
+#epochs = [i for i in range(1, 51)]
+epochs = [34]
 #CHANGE EPOCHS FOR 200 EPOCH RUNS
 
 a = len(testinglistIDs)
@@ -40,7 +41,7 @@ batch_size = 2
 sideLength = 48
 
 test_generator = testDataGenerator(testinglistIDs, testDir, batch_size=batch_size, v_size=sideLength)
-model = models.VGG16(sideLength)
+model = models.alexNet(sideLength)
 
 for epoch in epochs:
     model.load_weights("/data/lung_seg/FPR/alexNet/aug/2021-01-02_01:55:28/checkpoints/alex_aug_{}.hd5f".format(str(epoch).zfill(2)))
