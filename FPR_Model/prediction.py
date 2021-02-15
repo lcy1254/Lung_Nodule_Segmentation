@@ -21,7 +21,7 @@ tf.config.experimental.set_memory_growth(gpus[2], True)
 tf.config.experimental.set_memory_growth(gpus[3], True)
 strategy = tf.distribute.MirroredStrategy()
 with strategy.scope():
-    testDir = '/media/data_crypt_2/FPR_data_bigger/testing'
+    testDir = '/data/lung_seg/FPR/nodule_files/testing'
     testinglistIDs = [int(re.findall(r'[0-9]+', file)[0]) for file in os.listdir(testDir) if '.h5' in file]
 
     print('whole testing list IDs: ' + str(testinglistIDs))
@@ -37,14 +37,14 @@ with strategy.scope():
     sideLength = 48
 
     test_generator = testDataGenerator(testinglistIDs, testDir, batch_size=batch_size, v_size=sideLength)
-    model = models.alexNet(sideLength)
+    model = models.VGG16(sideLength)
 
     for epoch in epochs:
-        model.load_weights("/media/data_crypt_2/FPR/biggerpadding-alexnetaug/2021-01-17_13:31:07/checkpoints/alex_aug_stretch_{}.hd5f".format(str(epoch).zfill(2)))
+        model.load_weights("/data/lung_seg/FPR/VGG16/aug2/2021-01-04_03:41:48/checkpoints/vgg_aug_{}.hd5f".format(str(epoch).zfill(2)))
         model.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
-        prediction = model.evaluate(test_generator, verbose=1)
+        prediction = model.predict(test_generator, verbose=1)
         
-        savePath = '/media/data_crypt_2/FPR/biggerpadding-alexnetaug/2021-01-17_13:31:07/eval'
+        savePath = '/data/lung_seg/FPR/VGG16/aug2/2021-01-04_03:41:48/predictions'
         if not os.path.isdir(savePath): os.mkdir(savePath)
-        f = csv.writer(open(os.path.join(savePath, 'eval_epoch{}.csv'.format(epoch)), 'w+'))
+        f = csv.writer(open(os.path.join(savePath, 'predictions_epoch{}.csv'.format(epoch)), 'w+'))
         f.writerow(prediction)
