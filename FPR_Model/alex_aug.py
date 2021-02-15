@@ -8,14 +8,12 @@ import tensorflow as tf
 import re
 from tensorflow import keras
 import datetime
-from tensorflow.keras.callbacks import TensorBoard
-#from tensorflow.keras.optimizers import Adam
 from tensorflow.keras.callbacks import ModelCheckpoint
 from tensorflow.keras.callbacks import ReduceLROnPlateau
 from tensorflow.keras import backend as K
 
 import metricsHistory as mh
-
+'''
 gpus = tf.compat.v1.config.experimental.list_physical_devices('GPU')
 tf.config.experimental.set_memory_growth(gpus[0], True)
 tf.config.experimental.set_memory_growth(gpus[1], True)
@@ -24,8 +22,14 @@ tf.config.experimental.set_memory_growth(gpus[1], True)
 
 strategy = tf.distribute.MirroredStrategy()
 with strategy.scope():
-    #tf.config.experimental.set_visible_devices(gpus[0], 'GPU')
-
+'''
+gpus = tf.config.experimental.list_physical_devices('GPU')
+tf.config.experimental.set_visible_devices(gpus[0], 'GPU')
+tf.config.experimental.set_visible_devices(gpus[1], 'GPU')
+tf.config.experimental.set_memory_growth(gpus[0], True)
+tf.config.experimental.set_memory_growth(gpus[1], True)
+strategy = tf.distribute.MirroredStrategy()
+with strategy.scope():
     mode_run = 'train' #train or test
 
     ##----------------------------- Parameters -----------------------------------##
@@ -39,8 +43,8 @@ with strategy.scope():
 
     ##------------------------------ Dataset -------------------------------------##
     #Load list of IDs
-    trainingdataDir = '/data/FPR/training'
-    validationdataDir = '/data/FPR/validation'
+    trainingdataDir = '/data/resized_FPR/training'
+    validationdataDir = '/data/resized_FPR/validation'
 
     traininglistIDs = [re.findall(r'[0-9]+', file)[0] for file in os.listdir(trainingdataDir) if '.h5' in file]
     validationlistIDs = [re.findall(r'[0-9]+', file)[0] for file in os.listdir(validationdataDir) if '.h5' in file]
@@ -56,7 +60,7 @@ with strategy.scope():
 
     #Track accuracy and loss in real-time
     #if jupyter notebook:
-    log_dir = "//data/FPR/models/nopadding-alexnetaug/" + datetime.datetime.now().strftime("%Y-%m-%d_%H:%M:%S")
+    log_dir = "/data/FPR/models/improved_res_alex_aug/" + datetime.datetime.now().strftime("%Y-%m-%d_%H:%M:%S")
     file_writer = tf.summary.create_file_writer(log_dir + "/metrics")
     file_writer.set_as_default()
 
@@ -89,11 +93,10 @@ with strategy.scope():
             return learning_rate
             
         lr_callback = tf.keras.callbacks.LearningRateScheduler(scheduler)
-        tensorboard = TensorBoard(log_dir = log_dir, histogram_freq = 1)
         
         model.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
         
-        model.fit_generator(generator=training_generator, epochs=max_epochs, verbose=1, validation_data=validation_generator, callbacks=[history, checkpoints, lr_callback, tensorboard], class_weight=class_weight)
+        model.fit_generator(generator=training_generator, epochs=max_epochs, verbose=1, validation_data=validation_generator, callbacks=[history, checkpoints, lr_callback], class_weight=class_weight)
 
 
 
