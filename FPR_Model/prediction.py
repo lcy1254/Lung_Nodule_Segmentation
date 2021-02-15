@@ -33,7 +33,7 @@ with strategy.scope():
     print('total of {} testing images'.format(a))
     step = math.ceil(a/16)
 
-    batch_size = 256
+    batch_size = 2
     sideLength = 48
 
     test_generator = testDataGenerator(testinglistIDs, testDir, batch_size=batch_size, v_size=sideLength)
@@ -48,3 +48,14 @@ with strategy.scope():
         if not os.path.isdir(savePath): os.mkdir(savePath)
         f = csv.writer(open(os.path.join(savePath, 'predictions_epoch{}.csv'.format(epoch)), 'w+'))
         f.writerow(prediction)
+    
+    y_truth = []
+    for i in testinglistIDs:
+        path = os.path.join(testDir, '{}.txt'.format(i))
+        with open(path, 'r') as f:
+            y = int(f.readline().strip())
+            y_truth.append(y)
+    true_save_path = '/data/lung_seg/FPR/VGG16/aug2/2021-01-04_03:41:48/y_truth'
+    if not os.path.isdir(true_save_path): os.mkdir(true_save_path)
+    f = csv.writer(open(os.path.join(true_save_path, 'y_truth.csv'), 'w+'))
+    f.writerow(y_truth)
