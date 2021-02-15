@@ -43,11 +43,11 @@ test_generator = testDataGenerator(testinglistIDs, testDir, batch_size=batch_siz
 model = models.VGG16(sideLength)
 
 for epoch in epochs:
-    model.load_weights("/data/lung_seg/FPR/VGG16/aug2/2021-01-04_03:41:48/checkpoints/vgg_aug_{}.hd5f".format(str(epoch).zfill(2)))
+    model.load_weights("/data/lung_seg/FPR/alexNet/aug/2021-01-02_01:55:28/checkpoints/alex_aug_{}.hd5f".format(str(epoch).zfill(2)))
     model.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
     prediction = model.predict(test_generator, verbose=1)
     
-    savePath = '/data/lung_seg/FPR/VGG16/aug2/2021-01-04_03:41:48/predictions'
+    savePath = '/data/lung_seg/FPR/alexNet/aug/2021-01-02_01:55:28/predictions'
     if not os.path.isdir(savePath): os.mkdir(savePath)
     f = csv.writer(open(os.path.join(savePath, 'predictions_epoch{}.csv'.format(epoch)), 'w+'))
     f.writerow(prediction)
@@ -58,7 +58,7 @@ for i in testinglistIDs:
     with open(path, 'r') as f:
         y = int(f.readline().strip())
         y_truth.append(y)
-true_save_path = '/data/lung_seg/FPR/VGG16/aug2/2021-01-04_03:41:48/y_truth'
+true_save_path = '/data/lung_seg/FPR/alexNet/aug/2021-01-02_01:55:28/y_truth'
 if not os.path.isdir(true_save_path): os.mkdir(true_save_path)
 f = csv.writer(open(os.path.join(true_save_path, 'y_truth.csv'), 'w+'))
 f.writerow(y_truth)
