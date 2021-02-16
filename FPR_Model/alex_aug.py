@@ -11,6 +11,7 @@ import datetime
 from tensorflow.keras.callbacks import ModelCheckpoint
 from tensorflow.keras.callbacks import ReduceLROnPlateau
 from tensorflow.keras import backend as K
+from keras.optimizers import SGD
 
 import metricsHistory as mh
 '''
@@ -93,8 +94,8 @@ with strategy.scope():
             return learning_rate
             
         lr_callback = tf.keras.callbacks.LearningRateScheduler(scheduler)
-        
-        model.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
+        opt = SGD()
+        model.compile(optimizer=opt, loss='binary_crossentropy', metrics=['accuracy'])
         
         model.fit_generator(generator=training_generator, epochs=max_epochs, verbose=1, validation_data=validation_generator, callbacks=[history, checkpoints, lr_callback], class_weight=class_weight)
 
