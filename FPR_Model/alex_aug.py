@@ -26,6 +26,7 @@ with strategy.scope():
 gpus = tf.config.experimental.list_physical_devices('GPU')
 tf.config.experimental.set_memory_growth(gpus[0], True)
 tf.config.experimental.set_memory_growth(gpus[1], True)
+tf.config.experimental.set_memory_growth(gpus[2], True)
 strategy = tf.distribute.MirroredStrategy()
 with strategy.scope():
     mode_run = 'train' #train or test
@@ -41,8 +42,8 @@ with strategy.scope():
 
     ##------------------------------ Dataset -------------------------------------##
     #Load list of IDs
-    trainingdataDir = '/data/resized_FPR/training'
-    validationdataDir = '/data/resized_FPR/validation'
+    trainingdataDir = '/media/data_crypt_2/resized_FPR/training'
+    validationdataDir = '/media/data_crypt_2/resized_FPR/validation'
 
     traininglistIDs = [re.findall(r'[0-9]+', file)[0] for file in os.listdir(trainingdataDir) if '.h5' in file]
     validationlistIDs = [re.findall(r'[0-9]+', file)[0] for file in os.listdir(validationdataDir) if '.h5' in file]
@@ -58,7 +59,7 @@ with strategy.scope():
 
     #Track accuracy and loss in real-time
     #if jupyter notebook:
-    log_dir = "/data/FPR/models/improved_res_alex_aug/" + datetime.datetime.now().strftime("%Y-%m-%d_%H:%M:%S")
+    log_dir = "/media/data_crypt_2/resized_FPR/models/improved_res_alex_aug/" + datetime.datetime.now().strftime("%Y-%m-%d_%H:%M:%S")
     file_writer = tf.summary.create_file_writer(log_dir + "/metrics")
     file_writer.set_as_default()
 
