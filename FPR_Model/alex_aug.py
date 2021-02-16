@@ -11,7 +11,7 @@ import datetime
 from tensorflow.keras.callbacks import ModelCheckpoint
 from tensorflow.keras.callbacks import ReduceLROnPlateau
 from tensorflow.keras import backend as K
-from keras.optimizers import SGD
+from tensorflow.keras.optimizers import SGD
 
 import metricsHistory as mh
 '''
