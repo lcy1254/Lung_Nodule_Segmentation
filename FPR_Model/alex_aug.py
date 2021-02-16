@@ -37,7 +37,7 @@ with strategy.scope():
     ##----------------------------- Parameters -----------------------------------##
     n_classes = 2
     sideLength = 96
-    batch_size = 32
+    batch_size = 16
     max_epochs = 50
     period_checkpoint = 1
     class_weight = {0: 0.6, 1: 3.4}
