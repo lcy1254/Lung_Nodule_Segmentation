@@ -4,10 +4,19 @@ import os
 import scipy.ndimage
 import re
 
-#on jupiter
+#on jupiter -- did preprocessing for training & validation
+#on saturn -- did preprocessing for testing
 
+'''
+#on jupiter
 predDir = '/data/lung_inference/inference2'
 outDir = '/data/lung_resized_inference'
+gtDir = '/data/improved_res_lung/improved_res_nifti_files'
+'''
+
+#on jupiter for testing
+predDir = '/data/lung_inference/inference_for_test'
+outDir = '/data/lung_resized_inference/testing_iters'
 gtDir = '/data/improved_res_lung/improved_res_nifti_files'
 
 for predIter in os.listdir(predDir):
