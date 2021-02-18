@@ -11,9 +11,9 @@ from testingSet_utils import saveNodule
 #get trues from gt images
 #get falses from pred images
 
-gtDir = '/data/lung_seg/lung_nifti_files'
-predDir = '/data/lung_seg/blaine/frozen/inference'
-outDir = {'testing': '/media/data_crypt_2/FPR_data/testing'}
+gtDir = '/data/improved_res_lung/improved_res_nifti_files'
+predDir = '/data/lung_resized_inference/testing_iters'
+outDir = {'testing': '/data/resized_FPR_testing'}
 predIters = ['iter_11051', 'iter_29251', 'iter_18551', 'iter_26001', 'iter_27751', 'iter_24251'] #add more numbers
 
 assert os.path.isdir(gtDir)
