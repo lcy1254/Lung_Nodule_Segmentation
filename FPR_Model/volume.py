@@ -64,9 +64,9 @@ class DataGenerator(tf.keras.utils.Sequence):
             aug['flip'] = random.choice(choices)
             
             # Data Augmentation
-            #if aug['rotate'] == True: tempX = rotate(tempX)
-            #if aug['shift'] == True: tempX = shift(tempX)
-            #if aug['flip'] == True: tempX = flip(tempX)
+            if aug['rotate'] == True: tempX = rotate(tempX)
+            if aug['shift'] == True: tempX = shift(tempX)
+            if aug['flip'] == True: tempX = flip(tempX)
             
             #resize to 48*48*48 with zero padding after augmentation
             if tempX.shape[0] == self.v_size and tempX.shape[1] == self.v_size and tempX.shape[2] == self.v_size and tempX.shape[3] == 1:
