@@ -8,8 +8,6 @@ import tensorflow as tf
 import re
 from tensorflow import keras
 import datetime
-from tensorflow.keras.callbacks import TensorBoard
-#from tensorflow.keras.optimizers import Adam
 from tensorflow.keras.callbacks import ModelCheckpoint
 from tensorflow.keras.callbacks import ReduceLROnPlateau
 from tensorflow.keras import backend as K
@@ -39,8 +37,8 @@ with strategy.scope():
 
     ##------------------------------ Dataset -------------------------------------##
     #Load list of IDs
-    trainingdataDir = '/media/data_crypt_2/FPR_data_bigger/training'
-    validationdataDir = '/media/data_crypt_2/FPR_data_bigger/validation'
+    trainingdataDir = '/media/data_crypt_2/FPR_data/training'
+    validationdataDir = '/media/data_crypt_2/FPR_data/validation'
 
     traininglistIDs = [re.findall(r'[0-9]+', file)[0] for file in os.listdir(trainingdataDir) if '.h5' in file]
     validationlistIDs = [re.findall(r'[0-9]+', file)[0] for file in os.listdir(validationdataDir) if '.h5' in file]
@@ -56,7 +54,7 @@ with strategy.scope():
 
     #Track accuracy and loss in real-time
     #if jupyter notebook:
-    log_dir = "/media/data_crypt_2/FPR/biggerpadding-alexnetaug/" + datetime.datetime.now().strftime("%Y-%m-%d_%H:%M:%S")
+    log_dir = "/media/data_crypt_2/FPR/nopadding-alexnetaug/" + datetime.datetime.now().strftime("%Y-%m-%d_%H:%M:%S")
     file_writer = tf.summary.create_file_writer(log_dir + "/metrics")
     file_writer.set_as_default()
 
@@ -89,11 +87,10 @@ with strategy.scope():
             return learning_rate
             
         lr_callback = tf.keras.callbacks.LearningRateScheduler(scheduler)
-        tensorboard = TensorBoard(log_dir = log_dir, histogram_freq = 1)
         
-        model.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
+        model.compile(optimizer='sgd', loss='binary_crossentropy', metrics=['accuracy'])
         
-        model.fit_generator(generator=training_generator, epochs=max_epochs, verbose=1, validation_data=validation_generator, callbacks=[history, checkpoints, lr_callback, tensorboard], class_weight=class_weight)
+        model.fit_generator(generator=training_generator, epochs=max_epochs, verbose=1, validation_data=validation_generator, callbacks=[history, checkpoints, lr_callback], class_weight=class_weight)
 
 
 
