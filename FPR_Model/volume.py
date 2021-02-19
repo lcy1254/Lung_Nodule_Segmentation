@@ -10,7 +10,12 @@ from scipy import ndimage
 import os
 import h5py
 import random
-
+'''
+LJDFLJSDLFJLSDJFLSDLGJLSD
+SDLJFSDJFLSJKDFLJSDLFJK
+SDJFLSJDLFJSLDFJSLDJFLSD
+ENABLE ROTATE BEFORE YOU TRAIN ANY OTHER MODEL
+'''
 class DataGenerator(tf.keras.utils.Sequence):
     'Generates data for Keras'
     def __init__(self, listIDs, dataDir, v_size, batch_size=32, n_channels=1, n_classes=2, shuffle=True):
@@ -59,7 +64,7 @@ class DataGenerator(tf.keras.utils.Sequence):
             aug['flip'] = random.choice(choices)
             
             # Data Augmentation
-            if aug['rotate'] == True: tempX = rotate(tempX)
+            #if aug['rotate'] == True: tempX = rotate(tempX)
             if aug['shift'] == True: tempX = shift(tempX)
             if aug['flip'] == True: tempX = flip(tempX)
             
