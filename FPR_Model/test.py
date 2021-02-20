@@ -21,7 +21,7 @@ tf.config.experimental.set_memory_growth(gpus[1], True)
 strategy = tf.distribute.MirroredStrategy()
 with strategy.scope():
 
-    testDir = '/data/resized_FPR/testing'
+    testDir = '/data/resized_FPR/testing/resized_FPR_testing'
     testinglistIDs = [int(re.findall(r'[0-9]+', file)[0]) for file in os.listdir(testDir) if '.h5' in file]
 
     epochs = [i for i in range(1, 51)]    #CHANGE THIS
