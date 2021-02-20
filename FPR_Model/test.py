@@ -29,7 +29,7 @@ with strategy.scope():
     print('total of {} testing images'.format(a))
     step = math.ceil(a/16)
 
-    batch_size = 128    #CHANGE THIS
+    batch_size = 32    #CHANGE THIS
     sideLength = 48
 
     test_generator = testDataGenerator(testinglistIDs, testDir, batch_size=batch_size, v_size=sideLength)
