@@ -101,7 +101,7 @@ with strategy.scope():
         opt = SGD(momentum=0.9)
         model.compile(optimizer=opt, loss='binary_crossentropy', metrics=['accuracy'])
         
-        model.fit_generator(generator=training_generator, epochs=max_epochs, verbose=1, validation_data=validation_generator, callbacks=[history, checkpoints, lr_callback, tensorboard, savedmodels], class_weight=class_weight)
+        model.fit_generator(generator=training_generator, epochs=max_epochs, verbose=1, validation_data=validation_generator, callbacks=[history, checkpoints, lr_callback, savedmodels], class_weight=class_weight)
 
 
 
