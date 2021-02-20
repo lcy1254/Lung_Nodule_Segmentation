@@ -8,7 +8,7 @@ import tensorflow as tf
 import re
 from tensorflow import keras
 import datetime
-from tensorflow.keras.callbacks import TensorBoard
+from tensorflow.keras.optimizers import SGD
 
 from tensorflow.keras.callbacks import ModelCheckpoint
 from tensorflow.keras import backend as K
@@ -67,7 +67,7 @@ with strategy.scope():
 
     #Track accuracy and loss in real-time
     #if jupyter notebook:
-    log_dir = "/data/lung_seg/FPR/VGG16/aug2/" + datetime.datetime.now().strftime("%Y-%m-%d_%H:%M:%S")
+    log_dir = "/media/data_crypt_2/VGG/" + datetime.datetime.now().strftime("%Y-%m-%d_%H:%M:%S")
     file_writer = tf.summary.create_file_writer(log_dir + "/metrics")
     file_writer.set_as_default()
 
@@ -98,9 +98,8 @@ with strategy.scope():
             return learning_rate
             
         lr_callback = tf.keras.callbacks.LearningRateScheduler(scheduler)
-        tensorboard = TensorBoard(log_dir = log_dir, histogram_freq = 1)
-        
-        model.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
+        opt = SGD(momentum=0.9)
+        model.compile(optimizer=opt, loss='binary_crossentropy', metrics=['accuracy'])
         
         model.fit_generator(generator=training_generator, epochs=max_epochs, verbose=1, validation_data=validation_generator, callbacks=[history, checkpoints, lr_callback, tensorboard, savedmodels], class_weight=class_weight)
 
