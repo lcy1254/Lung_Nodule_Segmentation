@@ -42,7 +42,7 @@ with strategy.scope():
         model.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy']) #CHANGE THIS (OPTIMIZER)
         prediction = model.evaluate(test_generator, verbose=1)
         
-        savePath = 'media/data_crypt_2/alexNet_finetuning_reducelayers/2021-02-19_01:33:56/evaluation'    #CHANGE THIS
+        savePath = '/media/data_crypt_2/alexNet_finetuning_reducelayers/2021-02-19_01:33:56/evaluation'    #CHANGE THIS
         if not os.path.isdir(savePath): os.mkdir(savePath)
         with open(os.path.join(savePath, 'eval_epoch{}.txt'.format(epoch)), 'w+') as f:
             f.write(str(prediction))
