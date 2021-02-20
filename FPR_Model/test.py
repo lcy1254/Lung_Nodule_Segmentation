@@ -21,7 +21,7 @@ tf.config.experimental.set_memory_growth(gpus[3], True)
 strategy = tf.distribute.MirroredStrategy()
 with strategy.scope():
 
-    testDir = '/media/data_crypt_2/FPR_data/testing'
+    testDir = '/data/lung_seg/FPR/nodule_files/testing'
     testinglistIDs = [int(re.findall(r'[0-9]+', file)[0]) for file in os.listdir(testDir) if '.h5' in file]
 
     epochs = [i for i in range(1, 51)]    #CHANGE THIS
@@ -34,15 +34,15 @@ with strategy.scope():
     sideLength = 48    #CHANGE THIS
 
     test_generator = testDataGenerator(testinglistIDs, testDir, batch_size=batch_size, v_size=sideLength)
-    model = models.alexNet(sideLength)    #CHANGE THIS
+    model = alex_model.alexNet(sideLength)    #CHANGE THIS
 
     for epoch in epochs:
-        model.load_weights("/media/data_crypt_2/FPR/nopadding-alexnetaug/2021-02-19_00:03:17/checkpoints/alex_aug_stretch_{}.hd5f".format(str(epoch).zfill(2)))   #CHANGE THIS
+        model.load_weights("/media/data_crypt_2/alexNet_finetuning_reducelayers/2021-02-19_01:33:56/checkpoints/alex_finetuning_{}.hd5f".format(str(epoch).zfill(2)))   #CHANGE THIS
         opt = SGD()
-        model.compile(optimizer='sgd', loss='binary_crossentropy', metrics=['accuracy']) #CHANGE THIS (OPTIMIZER)
+        model.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy']) #CHANGE THIS (OPTIMIZER)
         prediction = model.evaluate(test_generator, verbose=1)
         
-        savePath = '/media/data_crypt_2/FPR/nopadding-alexnetaug/2021-02-19_00:03:17/evaluation'    #CHANGE THIS
+        savePath = 'media/data_crypt_2/alexNet_finetuning_reducelayers/2021-02-19_01:33:56/evaluation'    #CHANGE THIS
         if not os.path.isdir(savePath): os.mkdir(savePath)
         with open(os.path.join(savePath, 'eval_epoch{}.txt'.format(epoch)), 'w+') as f:
             f.write(str(prediction))
