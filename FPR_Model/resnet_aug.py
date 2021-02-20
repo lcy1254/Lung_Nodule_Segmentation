@@ -8,7 +8,7 @@ import tensorflow as tf
 import re
 from tensorflow import keras
 import datetime
-from tensorflow.keras.callbacks import TensorBoard
+from tensorflow.keras.optimizers import SGD
 
 from tensorflow.keras.callbacks import ModelCheckpoint
 from tensorflow.keras import backend as K
@@ -58,7 +58,7 @@ with strategy.scope():
 
     #Track accuracy and loss in real-time
     #if jupyter notebook:
-    log_dir = "/data/lung_seg/FPR/resNet/" + datetime.datetime.now().strftime("%Y-%m-%d_%H:%M:%S")
+    log_dir = "/media/data_crypt_2/resNet/" + datetime.datetime.now().strftime("%Y-%m-%d_%H:%M:%S")
     file_writer = tf.summary.create_file_writer(log_dir + "/metrics")
     file_writer.set_as_default()
 
@@ -78,19 +78,18 @@ with strategy.scope():
         #Compile
         def scheduler(epoch, lr):
             learning_rate = 0.001
-            if epoch > 10:
+            if epoch > 5:
                 learning_rate = 0.0001
-            if epoch > 15:
+            if epoch > 20:
                 learning_rate = 0.00001
-            if epoch > 30:
+            if epoch > 35:
                 learning_rate = 0.000005
             tf.summary.scalar('learning rate', data=learning_rate, step=epoch)
             return learning_rate
             
         lr_callback = tf.keras.callbacks.LearningRateScheduler(scheduler)
-        tensorboard = TensorBoard(log_dir = log_dir, histogram_freq = 1)
+        opt = SGD(momentum=0.9)
+        model.compile(optimizer=opt, loss='binary_crossentropy', metrics=['accuracy'])
         
-        model.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
-        
-        model.fit_generator(generator=training_generator, epochs=max_epochs, verbose=1, validation_data=validation_generator, callbacks=[history, checkpoints, lr_callback, tensorboard], class_weight=class_weight)
+        model.fit_generator(generator=training_generator, epochs=max_epochs, verbose=1, validation_data=validation_generator, callbacks=[history, checkpoints, lr_callback], class_weight=class_weight)
 
