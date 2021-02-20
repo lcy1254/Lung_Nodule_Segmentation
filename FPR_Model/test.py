@@ -20,7 +20,7 @@ tf.config.experimental.set_memory_growth(gpus[3], True)
 strategy = tf.distribute.MirroredStrategy()
 with strategy.scope():
 
-    testDir = '/data/lung_seg/FPR/nodule_files/testing'
+    testDir = '/media/data_crypt_2/resized_FPR/testing/resized_FPR_testing'
     testinglistIDs = [int(re.findall(r'[0-9]+', file)[0]) for file in os.listdir(testDir) if '.h5' in file]
 
     epochs = [i for i in range(1, 51)]    #CHANGE THIS
@@ -33,14 +33,14 @@ with strategy.scope():
     sideLength = 48
 
     test_generator = testDataGenerator(testinglistIDs, testDir, batch_size=batch_size, v_size=sideLength)
-    model = alex_model.alexNet(sideLength)    #CHANGE THIS
+    model = models.alexNet(sideLength)    #CHANGE THIS
 
     for epoch in epochs:
-        model.load_weights("/data/lung_seg/FPR/alexNet/dump/2021-01-04_03:42:35/checkpoints/alex_finetuning_{}.hd5f".format(str(epoch).zfill(2)))   #CHANGE THIS
-        model.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
+        model.load_weights("/media/data_crypt_2/resized_FPR/models/improved_res_alex_aug/2021-02-15_16:22:54/checkpoints/alex_aug_{}.hd5f".format(str(epoch).zfill(2)))   #CHANGE THIS
+        model.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy']) #CHANGE THIS (OPTIMIZER)
         prediction = model.evaluate(test_generator, verbose=1)
         
-        savePath = '/media/data_crypt_2/alexNet_finetuning/evaluation'    #CHANGE THIS
+        savePath = '/media/data_crypt_2/resized_FPR/models/improved_res_alex_aug/2021-02-15_16:22:54/evaluation'    #CHANGE THIS
         if not os.path.isdir(savePath): os.mkdir(savePath)
-        with open(os.path.join(savePath, 'prediction_epoch{}.txt'.format(epoch)), 'w+') as f:
+        with open(os.path.join(savePath, 'eval_epoch{}.txt'.format(epoch)), 'w+') as f:
             f.write(str(prediction))
