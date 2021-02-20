@@ -6,6 +6,7 @@ import re
 import os
 import math
 import alex_model
+from tensorflow.keras.optimizers import SGD
 '''
 gpus = tf.config.experimental.list_physical_devices('GPU')
 tf.config.experimental.set_visible_devices(gpus[2], 'GPU')
@@ -37,7 +38,8 @@ with strategy.scope():
 
     for epoch in epochs:
         model.load_weights("/data/resized_FPR/models/improved_res_alex_aug/2021-02-16_11:57:24/checkpoints/alex_aug_{}.hd5f".format(str(epoch).zfill(2)))   #CHANGE THIS
-        model.compile(optimizer='sgd', loss='binary_crossentropy', metrics=['accuracy']) #CHANGE THIS (OPTIMIZER)
+        opt = SGD()
+        model.compile(optimizer=opt, loss='binary_crossentropy', metrics=['accuracy']) #CHANGE THIS (OPTIMIZER)
         prediction = model.evaluate(test_generator, verbose=1)
         
         savePath = '/data/resized_FPR/models/improved_res_alex_aug/2021-02-16_11:57:24/checkpoints/evaluation'    #CHANGE THIS
