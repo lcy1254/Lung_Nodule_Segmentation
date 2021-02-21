@@ -34,15 +34,15 @@ with strategy.scope():
     sideLength = 48    #CHANGE THIS
 
     test_generator = testDataGenerator(testinglistIDs, testDir, batch_size=batch_size, v_size=sideLength)
-    model = alex_model.alexNet(sideLength)    #CHANGE THIS
+    model = models.resNet(sideLength)    #CHANGE THIS
 
     for epoch in epochs:
-        model.load_weights("/media/data_crypt_2/alexNet_finetuning_reducelayers/2021-02-19_01:33:56/checkpoints/alex_finetuning_{}.hd5f".format(str(epoch).zfill(2)))   #CHANGE THIS
-        opt = SGD()
+        model.load_weights("/media/data_crypt_2/resNet/2021-02-20_13:22:50/checkpoints/res_aug_{}.hd5f".format(str(epoch).zfill(2)))   #CHANGE THIS
+        #opt = SGD()
         model.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy']) #CHANGE THIS (OPTIMIZER)
         prediction = model.evaluate(test_generator, verbose=1)
         
-        savePath = '/media/data_crypt_2/alexNet_finetuning_reducelayers/2021-02-19_01:33:56/evaluation'    #CHANGE THIS
+        savePath = '/media/data_crypt_2/resNet/2021-02-20_13:22:50/evaluation'    #CHANGE THIS
         if not os.path.isdir(savePath): os.mkdir(savePath)
         with open(os.path.join(savePath, 'eval_epoch{}.txt'.format(epoch)), 'w+') as f:
             f.write(str(prediction))
