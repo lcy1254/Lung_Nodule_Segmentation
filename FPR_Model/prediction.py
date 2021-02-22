@@ -31,7 +31,7 @@ testinglistIDs = [int(re.findall(r'[0-9]+', file)[0]) for file in os.listdir(tes
 print('whole testing list IDs: ' + str(testinglistIDs))
 
 #epochs = [i for i in range(1, 51)]
-epochs = [24]
+epochs = [25]
 #CHANGE EPOCHS FOR 200 EPOCH RUNS
 
 a = len(testinglistIDs)
