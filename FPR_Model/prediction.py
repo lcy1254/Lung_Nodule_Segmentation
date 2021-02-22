@@ -6,6 +6,7 @@ import re
 import os
 import math
 import csv
+import alex_model
 
 
 '''
@@ -30,7 +31,7 @@ testinglistIDs = [int(re.findall(r'[0-9]+', file)[0]) for file in os.listdir(tes
 print('whole testing list IDs: ' + str(testinglistIDs))
 
 #epochs = [i for i in range(1, 51)]
-epochs = [32]
+epochs = [24]
 #CHANGE EPOCHS FOR 200 EPOCH RUNS
 
 a = len(testinglistIDs)
@@ -41,14 +42,14 @@ batch_size = 2
 sideLength = 48
 
 test_generator = testDataGenerator(testinglistIDs, testDir, batch_size=batch_size, v_size=sideLength)
-model = models.resNet(sideLength)
+model = alex_model.alexNet(sideLength)
 
 for epoch in epochs:
-    model.load_weights("/media/data_crypt_2/resNet/2021-02-20_13:22:50/checkpoints/res_aug_{}.hd5f".format(str(epoch).zfill(2)))
+    model.load_weights("/media/data_crypt_2/alexNet_finetuning_reducelayers/2021-02-19_01:33:56/checkpoints/alex_finetuning_{}.hd5f".format(str(epoch).zfill(2)))
     model.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
     prediction = model.predict(test_generator, verbose=1)
     
-    savePath = '/media/data_crypt_2/resNet/2021-02-20_13:22:50/predictions'
+    savePath = '/media/data_crypt_2/alexNet_finetuning_reducelayers/2021-02-19_01:33:56/predictions'
     if not os.path.isdir(savePath): os.mkdir(savePath)
     f = csv.writer(open(os.path.join(savePath, 'predictions_epoch{}.csv'.format(epoch)), 'w+'))
     f.writerow(prediction)
