@@ -100,6 +100,3 @@ with strategy.scope():
         model.compile(optimizer=opt, loss='binary_crossentropy', metrics=['accuracy'])
         
         model.fit_generator(generator=training_generator, epochs=max_epochs, verbose=1, validation_data=validation_generator, callbacks=[history, checkpoints, lr_callback], class_weight=class_weight)
-
-
-
