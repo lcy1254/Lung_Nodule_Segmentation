@@ -72,8 +72,8 @@ class DataGenerator(tf.keras.utils.Sequence):
             #if aug['shift'] == True: tempX = shift(tempX)
             #if aug['flip'] == True: tempX = flip(tempX)
     
-            xform = get_xform(tempX, rotMax=(90, 90, 90), pReflect=(.5, .5, .5), shearMax=(.5,.5,.5), transMax=(3,3,3), printFun=1)
-            tempX = apply_xforms_images(xform, tempX)
+            xform = list(get_xform(tempX, rotMax=(90, 90, 90), pReflect=(.5, .5, .5), shearMax=(.5,.5,.5), transMax=(3,3,3)))
+            tempX = apply_xforms_images(xform, list(tempX))
             
             #resize to 48*48*48 with zero padding after augmentation
             if tempX.shape[0] == self.v_size and tempX.shape[1] == self.v_size and tempX.shape[2] == self.v_size and tempX.shape[3] == 1:
