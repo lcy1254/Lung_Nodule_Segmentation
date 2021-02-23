@@ -36,8 +36,8 @@ with strategy.scope():
 
     ##----------------------------- Parameters -----------------------------------##
     n_classes = 2
-    sideLength = 96
-    batch_size = 16
+    sideLength = 48
+    batch_size = 64
     max_epochs = 50
     period_checkpoint = 1
     class_weight = {0: 0.6, 1: 3.4}
@@ -45,8 +45,10 @@ with strategy.scope():
 
     ##------------------------------ Dataset -------------------------------------##
     #Load list of IDs
-    trainingdataDir = '/media/data_crypt_2/resized_FPR/training'
-    validationdataDir = '/media/data_crypt_2/resized_FPR/validation'
+    #trainingdataDir = '/media/data_crypt_2/resized_FPR/training'
+    #validationdataDir = '/media/data_crypt_2/resized_FPR/validation'
+    trainingdataDir = '/data/lung_seg/FPR/nodule_files/training'
+    validationdataDir = '/data/lung_seg/FPR/nodule_files/validation'
 
     traininglistIDs = [re.findall(r'[0-9]+', file)[0] for file in os.listdir(trainingdataDir) if '.h5' in file]
     validationlistIDs = [re.findall(r'[0-9]+', file)[0] for file in os.listdir(validationdataDir) if '.h5' in file]
@@ -62,7 +64,7 @@ with strategy.scope():
 
     #Track accuracy and loss in real-time
     #if jupyter notebook:
-    log_dir = "/media/data_crypt_2/resized_FPR/models/improved_res_alex_aug/" + datetime.datetime.now().strftime("%Y-%m-%d_%H:%M:%S")
+    log_dir = "/media/data_crypt_2/alexNet" + datetime.datetime.now().strftime("%Y-%m-%d_%H:%M:%S")
     file_writer = tf.summary.create_file_writer(log_dir + "/metrics")
     file_writer.set_as_default()
 
@@ -93,9 +95,8 @@ with strategy.scope():
                 learning_rate = 0.000005
             tf.summary.scalar('learning rate', data=learning_rate, step=epoch)
             return learning_rate
-            
+        opt = SGD(momentum=0.9)
         lr_callback = tf.keras.callbacks.LearningRateScheduler(scheduler)
-        opt = SGD()
         model.compile(optimizer=opt, loss='binary_crossentropy', metrics=['accuracy'])
         
         model.fit_generator(generator=training_generator, epochs=max_epochs, verbose=1, validation_data=validation_generator, callbacks=[history, checkpoints, lr_callback], class_weight=class_weight)
