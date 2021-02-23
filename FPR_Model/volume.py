@@ -247,7 +247,7 @@ import math
 import numpy as np
 import scipy.ndimage as nd
 
-import cudaImageWarp
+from pyCudaImageWarp import cudaImageWarp
 
 """
     Pad the image to have a singleton channel dimension.
